@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="csrf-token" content="{{ csrf_token }}" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcat icon" href="{% static 'imgs/logo1.png' %}" />
+    <title>
+      {% block title %}
+
+      {% endblock %}
+    </title>
+    <link href="{% static 'fontawesome-6.2.1/css/all.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'scss/custom.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/master.css' %}" rel="stylesheet" type="text/css" />
+    {% block styles %}
+
+    {% endblock %}
+  </head>
+  <body>
+    <div id="container">
+      <header class="d-block w-100 float-start bg-bblight">
+        <div class="divlogo">
+          <a href="{% url 'home_url' %}"><img src="{% static 'imgs/logo1.png' %}" /></a>
+        </div>
+        <div class="divbars">
+          <span class="menu"><i class="fas fa-bars"></i></span>
+        </div>
+      </header>
+      <div class="main d-block w-100 float-start">
+        <nav id="navbar" class="bg-ttxt1">
+          <div class="link">
+            <a href="{% url 'home_url' %}" class="a1"><i class="fas fa-home"></i> &nbsp; Home</a>
+          </div>
+          <div class="link">
+            <span class="header" id="fleet_menu_btn"><i class="fas fa-truck"></i> &nbsp; Fleet <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
+            <div class="submenu">
+              <a href="{% url 'trucks' %}" class="a2"><i class="fas fa-arrow-right"></i> &nbsp; Trucks</a>
+              <a href="{% url 'trailers' %}" class="a3"><i class="fas fa-arrow-right"></i> &nbsp; Trailers</a>
+              <a href="{% url 'permits' %}" class="a4"><i class="fas fa-arrow-right"></i> &nbsp; Permits</a>
+              <a href="{% url 'maintenance' %}" class="a5"><i class="fas fa-arrow-right"></i> &nbsp; Maintenance</a>
+            </div>
+          </div>
+          <div class="link">
+            <span class="header"><i class="fas fa-route"></i> &nbsp; Trips <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
+            <div class="submenu">
+              <a href="#" class="link2"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu1</a>
+              <a href="#" class="link3"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu2</a>
+              <a href="#" class="link4"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu3</a>
+            </div>
+          </div>
+          <div class="link">
+            <span class="header"><i class="fas fa-users"></i> &nbsp; Manage <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
+            <div class="submenu">
+              <a href="#" class="link2"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu1</a>
+              <a href="#" class="link3"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu2</a>
+              <a href="#" class="link4"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu3</a>
+            </div>
+          </div>
+          <div class="link">
+            <a href="#" class="link1"><i class="fas fa-user"></i> &nbsp; Profile</a>
+          </div>
+          <div class="link">
+            <a href="#" class="link1"><i class="fas fa-sign-out"></i> &nbsp; Sign Out</a>
+          </div>
+        </nav>
+        <div class="offcanvas offcanvas-start" id="navbar_canvas">
+          <div class="offcanvas-header">
+            <h1 class="offcanvas-title text-ttxt1">Menu..</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div id="menucanvas" class="offcanvas-body bg-ttxt1"></div>
+        </div>
+        <div class="wrapper text-center" id="contents">
+          {% block contents %}
+
+          {% endblock %}
+        </div>
+      </div>
+      <footer class="text-white bg-bblight">
+        <span>&copy; 2024 - Multiplier Logistics ltd</span>
+        <span>All rights reserved</span>
+        <span>Design by fidon_developer</span>
+      </footer>
+    </div>
+    <script src="{% static 'js/jquery-3.6.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap-5.3.0/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'datatables/datatables.min.js' %}"></script>
+    <script src="{% static 'js/master.js' %}"></script>
+    {% block scripts %}
+
+    {% endblock %}
+  </body>
+</html>

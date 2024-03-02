@@ -1,0 +1,227 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Trailers | Multiplier ltd
+{% endblock %}
+{% block styles %}
+  <link href="{% static 'css/fleet/trailers.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block contents %}
+  {% if trailer_info %}
+    <div class="info_trailer">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#trailer_basic_info">Information</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#trailer_trips">Trips</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#trailer_permits">Permits</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#trailer_maintenance">Maintenance</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#trailer_gps">GPS tracker</a>
+        </li>
+      </ul>
+
+      <div class="tab_container">
+        <div id="trailer_basic_info" class="tab_div">
+          <h5>trailer information..</h5><hr class="my-1" />
+          <div class="info">
+            <div>
+              <b>Current status:</b> &nbsp; Trip (returning)
+            </div>
+            <div>
+              <b>Add date:</b> &nbsp; 19-Feb-2024 16:52:46
+            </div>
+            <div>
+              <b>Added by:</b> &nbsp; Jonathan Masawe
+            </div>
+            <div>
+              <b>Last edited by:</b> &nbsp; Musa Luhanga (03-Mar-2024)
+            </div>
+            <div>
+              <b>Reg. Number:</b> &nbsp; T 684 BTC
+            </div>
+            <div>
+              <b>Type:</b> &nbsp; Scania
+            </div>
+            <div>
+              <b>Model:</b> &nbsp; Scania 574
+            </div>
+            <div>
+              <b>Trailer:</b> &nbsp; T 257 CSE
+            </div>
+            <div>
+              <b>Driver:</b> &nbsp; Hassan Msangi
+            </div>
+            <div>
+              <b>Contact:</b> &nbsp; 0757 957 579
+            </div>
+
+            <div class="d-block w-100 py-3">
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="trailer_change_truck_btn">Change truck</button>
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="trailer_update_info_btn">Update info</button>
+              <button type="button" class="btn btn-warning d-inline-block m-2" id="trailer_hide_btn">Block</button>
+              <button type="button" class="btn btn-danger d-inline-block m-2" id="trailer_delete_btn">Delete</button>
+            </div>
+          </div>
+        </div>
+        <div id="trailer_trips" class="tab_div">
+          <h5>trailer's trip history..</h5><hr class="my-1" />
+          <div class="d-block w-100 float-start my-1 table-responsive">
+            <table class="table text-ttxt table-striped" id="trailer_trips_table">
+              <thead>
+                <tr class="bg-bblight text-white text-center">
+                  <th class="text-center">S/n</th>
+                  <th class="text-center">StartDate</th>
+                  <th class="text-center">Origin</th>
+                  <th class="text-center">Destination</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody class="text-ttxt">
+                <tr>
+                  <td class="align-middle">1</td>
+                  <td class="align-middle">24-Jan-2024</td>
+                  <td class="align-middle">Pwani</td>
+                  <td class="align-middle">Entebe-Uganda</td>
+                  <td class="align-middle">Returning</td>
+                  <td class="align-middle">
+                    <a class="btn btn-bblight text-white" href="#">View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="trailer_permits" class="tab_div">
+          <h5>trailer's permits list..</h5><hr class="my-1" />
+          <div class="d-block w-100 float-start my-1 table-responsive">
+            <table class="table text-ttxt table-striped" id="trailer_permits_table">
+              <thead>
+                <tr class="bg-bblight text-white text-center">
+                  <th class="text-center">S/n</th>
+                  <th class="text-center">Type</th>
+                  <th class="text-center">Cost</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody class="text-ttxt">
+                <tr>
+                  <td class="align-middle">1</td>
+                  <td class="align-middle">Border crossing</td>
+                  <td class="align-middle">185,000 TZS</td>
+                  <td class="align-middle">
+                    <a class="btn btn-bblight text-white" href="#">View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="trailer_maintenance" class="tab_div">
+          <h5>trailer's maintenance history..</h5><hr class="my-1" />
+          <div class="d-block w-100 float-start my-1 table-responsive">
+            <table class="table text-ttxt table-striped" id="trailer_maintenance_table">
+              <thead>
+                <tr class="bg-bblight text-white text-center">
+                  <th class="text-center">S/n</th>
+                  <th class="text-center">Dates</th>
+                  <th class="text-center">Cost</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody class="text-ttxt">
+                <tr>
+                  <td class="align-middle">1</td>
+                  <td class="align-middle">24-Jan-2024</td>
+                  <td class="align-middle">365,000 TZS</td>
+                  <td class="align-middle">
+                    <a class="btn btn-bblight text-white" href="#">View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="trailer_gps" class="tab_div">
+          <h5>trailer's gps tracker..</h5><hr class="my-1" />
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="searchdiv input-group w-100 float-start">
+      <input type="text" class="form-control text-ttxt fs-6" id="trailers_search" placeholder="Search.." autocomplete="off" />
+      <button type="button" class="btn btn-bblue text-white ms-1" id="trailers_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+      <button class="btn btn-success text-white ms-1" type="button" title="Add new trailer" data-bs-toggle="offcanvas" data-bs-target="#new_trailer_canvas"><i class="fas fa-plus-circle"></i></button>
+    </div>
+
+    <div class="d-block w-100 float-start my-2 table-responsive">
+      <table class="table text-ttxt table-striped" id="trailers_table">
+        <thead>
+          <tr class="bg-bblight text-white text-center">
+            <th class="text-center">S/n</th>
+            <th class="text-center">Number</th>
+            <th class="text-center">Model</th>
+            <th class="text-center">Truck</th>
+            <th class="text-center">Maintenance</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody class="text-ttxt">
+          <tr>
+            <td class="align-middle">1</td>
+            <td class="align-middle">T 394 EKD</td>
+            <td class="align-middle">S045-TY08-5879</td>
+            <td class="align-middle">T 482 CPS</td>
+            <td class="align-middle">13-Feb-2024</td>
+            <td class="align-middle">
+              <a class="btn btn-bblue" href="{% url 'trailer_details' 5 %}">View</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="offcanvas offcanvas-start" id="new_trailer_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h3 class="offcanvas-title text-white">New trailer..</h3>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start">
+          <div class="formsms w-100 float-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trl_regnumber" placeholder="p" required />
+            <label for="trl_regnumber" class="text-ttxt fs-6">Registration number</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trl_model" placeholder="p" required />
+            <label for="trl_model" class="text-ttxt fs-6">Model</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="trl_truck" required>
+              <option value="">No truck selected</option>
+              <option value="1">Truck 1</option>
+              <option value="2">Truck 2</option>
+              <option value="3">Truck 3</option>
+            </select>
+            <label class="form-label text-ttxt" for="trl_truck">Select truck</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="trl_submit_btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/fleet/trailers.js' %}"></script>
+{% endblock %}
