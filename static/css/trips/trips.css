@@ -1,0 +1,178 @@
+#navbar .link .a6 {
+    background-color: rgba(240,240,240,.9);
+    color: #2D2D2D;
+}
+
+
+
+/* datatables styles */
+#contents .dataTables_filter {
+    display: none;
+}
+#contents .dt-buttons {
+    margin: 10px 0;
+}
+#contents .dataTables_length {
+    border: 1px solid rgba(105,105,105, 0.3);
+    float: right;
+    color: #696969;
+    margin: 10px 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 3px;
+}
+#contents .dataTables_length .form-select {
+    border: 1px solid rgba(66,139,202, 0.8);
+}
+#contents .dataTables_info {
+    width: auto;
+    float: left;
+    color: #696969;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+#contents table th input,
+#contents table th select {
+    border: 1px solid rgb(66,139,202,.6);
+    padding-left: 3px;
+    font-size: 13px;
+    height: 30px;
+    border-radius: 3px;
+    width: 120px;
+}
+#contents .searchdiv input:focus,
+#contents .dataTables_length .form-select:focus,
+#contents table th input:focus,
+#contents table th select:focus {
+    border-color: #428BCA;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 7px rgba(66,139,202, 0.6);
+    outline: none;
+}
+#contents .dataTables_paginate {
+    width: auto;
+    float: right;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+#contents .dataTables_paginate ul {
+    border: 1px solid rgb(66,139,202,.6);
+    border-radius: 5px;
+    color: #696969;
+}
+#contents .dataTables_paginate ul li a:hover {
+    background-color: rgb(66,139,202,.8);
+    color: #fff;
+}
+#contents .dataTables_paginate ul li a:focus {
+    box-shadow: none;
+}
+
+
+#contents .searchdiv input {
+    border: 1px solid rgb(66,139,202,.4);
+}
+#contents table th,
+#contents table td {
+    padding: auto 5px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+
+#contents .info_trip {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 0;
+    color: #696969;
+}
+#contents .info_trip a {
+    color: inherit;
+    text-decoration: none;
+}
+#contents .info_trip ul {
+    display: block;
+    width: 100%;
+    height: auto;
+    float: left;
+    background-color: #1E63AF;
+    color: #FFFFFF;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-size: 0;
+}
+#contents .info_trip ul li {
+    display: inline-block;
+    width: auto;
+    font-size: 15px;
+    padding: 0;
+}
+#contents .info_trip ul li a {
+    display: block;
+    width: auto;
+    min-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    padding: 8px 15px;
+}
+#contents .info_trip ul li a.active {
+    background-color: #F0F0F0;
+    color: #696969;
+    border-radius: 0;
+}
+#contents .info_trip .tab_container {
+    display: block;
+    width: 100%;
+    height: auto;
+    float: left;
+    text-align: left;
+    padding: 20px 5px;
+    color: #696969;
+}
+#contents .info_trip .tab_container .tab_div {
+    display: none;
+    width: 100%;
+    float: left;
+    padding: 0;
+}
+#contents .info_trip .tab_container .tab_div:nth-child(1) {
+    display: block;
+}
+#contents .info_trip .tab_container .tab_div .info {
+    display: block;
+    width: 100%;
+    float: left;
+    font-size: 16px;
+}
+#contents .info_trip .tab_container .tab_div .info div {
+    width: 50%;
+    float: left;
+    padding: 2px;
+}
+#contents .info_trip .tab_container .tab_div h5 span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+#contents .info_trip .tab_container .tab_div .info div a {
+    border: 1px solid rgb(66,139,202,.5);
+    border-radius: 3px;
+    transition: all 0.5s ease;
+}
+#contents .info_trip .tab_container .tab_div .info div a:hover {
+    background-color: rgb(66,139,202,.8);
+    color: #FFFFFF;
+}
+
+
+
+
+@media only screen and (max-width: 768px) {
+    #contents .info_trip .tab_container .tab_div .info div {
+        display: block;
+        width: 100%;
+    }
+}

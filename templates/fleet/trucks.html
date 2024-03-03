@@ -53,7 +53,7 @@
               <b>Model:</b> &nbsp; Scania 574
             </div>
             <div>
-              <b>Trailer:</b> &nbsp; T 257 CSE
+              <b>Trailer:</b> &nbsp; <a href="{% url 'trailer_details' 5 %}" class="d-inline-block px-2">Scania - T 652 DKY</a>
             </div>
             <div>
               <b>Driver:</b> &nbsp; Hassan Msangi
@@ -63,7 +63,6 @@
             </div>
 
             <div class="d-block w-100 py-3">
-              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="truck_change_trailer_btn">Change trailer</button>
               <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="truck_update_info_btn">Update info</button>
               <button type="button" class="btn btn-warning d-inline-block m-2" id="truck_hide_btn">Block</button>
               <button type="button" class="btn btn-danger d-inline-block m-2" id="truck_delete_btn">Delete</button>
@@ -100,7 +99,7 @@
           </div>
         </div>
         <div id="truck_permits" class="tab_div">
-          <h5>Truck's permits list..</h5><hr class="my-1" />
+          <h5 class="position-relative">Truck's permits list..<span class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add_permit_modal"><i class="fas fa-plus-circle"></i> Add new</span></h5><hr class="my-1" />
           <div class="d-block w-100 float-start my-1 table-responsive">
             <table class="table text-ttxt table-striped" id="truck_permits_table">
               <thead>
@@ -156,7 +155,7 @@
     </div>
   {% else %}
     <div class="searchdiv input-group w-100 float-start">
-      <input type="text" class="form-control text-ttxt fs-6" id="trucks_search" placeholder="Search.." autocomplete="off" />
+      <input type="text" class="form-control text-ttxt fs-5" id="trucks_search" placeholder="Search.." autocomplete="off" />
       <button type="button" class="btn btn-bblue text-white ms-1" id="trucks_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
       <button class="btn btn-success text-white ms-1" type="button" title="Add new truck" data-bs-toggle="offcanvas" data-bs-target="#new_truck_canvas"><i class="fas fa-plus-circle"></i></button>
     </div>
@@ -194,7 +193,7 @@
 
     <div class="offcanvas offcanvas-start" id="new_truck_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h3 class="offcanvas-title text-white">New truck..</h3>
+        <h3 class="offcanvas-title text-white">Add new truck..</h3>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
@@ -224,9 +223,9 @@
           <div class="form-floating d-block w-100 float-start my-2 text-start">
             <span class="d-inline-block py-1 px-2 fs-6 border border-bblight rounded text-bblue" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#add_permit_modal">Add permit &nbsp; <i class="fas fa-plus-circle"></i></span>
             <div class="d-block w-100 float-start mt-1">
-              <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names1 &nbsp; <i class="fas fa-times-circle" style="cursor:pointer;"></i></span>
-              <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names2 &nbsp; <i class="fas fa-times-circle" style="cursor:pointer;"></i></span>
-              <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names3 &nbsp; <i class="fas fa-times-circle" style="cursor:pointer;"></i></span>
+              <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names1 &nbsp; <i class="fas fa-times-circle text-danger" style="cursor:pointer;"></i></span>
+              <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names2 &nbsp; <i class="fas fa-times-circle text-danger" style="cursor:pointer;"></i></span>
+              <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names3 &nbsp; <i class="fas fa-times-circle text-danger" style="cursor:pointer;"></i></span>
             </div>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
@@ -236,36 +235,44 @@
         </form>
       </div>
     </div>
+  {% endif %}
 
-    <div class="modal fade" id="add_permit_modal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-bblue">
-            <h3 class="modal-title text-white">Add new permit</h3>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+  <div class="modal fade" id="add_permit_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-bblue">
+          <h3 class="modal-title text-white">Add new permit..</h3>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form class="modal-body">
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" max="{% now 'Y-m-d' %}" class="form-control text-ttxt fs-6" id="trk_permit_date" placeholder="d" />
+            <label for="trk_permit_date" class="text-ttxt fs-6">Permit date</label>
           </div>
-          <form class="modal-body">
-            <div class="form-floating d-block w-100 float-start my-1">
-              <input type="date" max="{% now 'Y-m-d' %}" class="form-control text-ttxt fs-6" id="trk_permit_date" placeholder="d" />
-              <label for="trk_permit_date" class="text-ttxt fs-6">Permit date</label>
-            </div>
-            <div class="form-floating d-block w-100 float-start my-1">
-              <input type="text" class="form-control text-ttxt fs-6" id="trk_permit_type" placeholder="d" />
-              <label for="trk_permit_type" class="text-ttxt fs-6">Type of permit</label>
-            </div>
-            <div class="form-floating d-block w-100 float-start my-1">
-              <textarea class="form-control text-ttxt" id="trk_permit_description" placeholder="d" style="min-height:120px;"></textarea>
-              <label for="trk_permit_description" class="text-ttxt">Permit description (optional)</label>
-            </div>
-          </form>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-success" id="trk_submit_permit_btn" data-bs-dismiss="modal">Add</button>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trk_permit_name" placeholder="d" />
+            <label for="trk_permit_name" class="text-ttxt fs-6">Permit name</label>
           </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trk_permit_type" placeholder="d" />
+            <label for="trk_permit_type" class="text-ttxt fs-6">Permit type</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" class="form-control text-ttxt fs-6" id="trk_permit_cost" placeholder="d" />
+            <label for="trk_permit_cost" class="text-ttxt fs-6">Permit cost</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt" id="trk_permit_description" placeholder="d" style="min-height:150px;"></textarea>
+            <label for="trk_permit_description" class="text-ttxt">Permit description (optional)</label>
+          </div>
+        </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" id="trk_submit_permit_btn" data-bs-dismiss="modal">Add</button>
         </div>
       </div>
     </div>
-  {% endif %}
+  </div>
 {% endblock %}
 {% block scripts %}
   <script src="{% static 'js/fleet/trucks.js' %}"></script>

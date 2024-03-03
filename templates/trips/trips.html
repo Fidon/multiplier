@@ -1,0 +1,305 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Trips | Multiplier ltd
+{% endblock %}
+{% block styles %}
+  <link href="{% static 'css/trips/trips.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block contents %}
+  {% if trip_info %}
+    <div class="info_trip">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#trip_basic_info">Information</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#trip_expenses">Expenses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#trip_gps">GPS tracker</a>
+        </li>
+      </ul>
+
+      <div class="tab_container">
+        <div id="trip_basic_info" class="tab_div">
+          <h5>Trip information..</h5><hr class="my-1" />
+          <div class="info">
+            <div>
+              <b>Current status:</b> &nbsp; Going
+            </div>
+            <div>
+              <b>Record date:</b> &nbsp; 19-Feb-2024 16:52:46
+            </div>
+            <div>
+              <b>Recorded by:</b> &nbsp; Jonathan Masawe
+            </div>
+            <div>
+              <b>Last edited by:</b> &nbsp; -
+            </div>
+            <div>
+              <b>Driver:</b> &nbsp; Samwel M. Mwakipensile - 0756 852 369
+            </div>
+            <div>
+              <b>Truck Number:</b> &nbsp; <a href="{% url 'truck_details' 5 %}" class="d-inline-block px-2">T 684 BTC</a>
+            </div>
+            <div>
+              <b>Origin:</b> &nbsp; Kigamboni-DSM
+            </div>
+            <div>
+              <b>Destination:</b> &nbsp; Karagwe-Kagera
+            </div>
+            <div>
+              <b>Route:</b> &nbsp; -
+            </div>
+            <div>
+              <b>Total expenses:</b> &nbsp; 685,000 TZS
+            </div>
+            <div class="d-block w-100">
+              <b>Cargo description:</b> &nbsp; Any random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph
+            </div>
+            <div class="d-block w-100">
+              <b>Trip comment(s):</b> &nbsp; Any random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph random description paragraph
+            </div>
+
+            <div class="d-block w-100 py-3">
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="trip_update_info_btn" data-bs-toggle="modal" data-bs-target="#add_comment_modal">Add comment</button>
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="trp_add_expense" data-bs-toggle="modal" data-bs-target="#add_expense_modal">Add expense</button>
+              <button type="button" class="btn btn-success d-inline-block m-2" id="trp_mark_complete" data-bs-toggle="modal" data-bs-target="#mark_complete_modal">Mark as complete</button>
+            </div>
+          </div>
+        </div>
+        <div id="trip_expenses" class="tab_div">
+          <h5 class="position-relative">Trip's expenses list.. <span class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add_expense_modal"><i class="fas fa-plus-circle"></i> Add new</span></h5><hr class="my-1" />
+          <div class="d-block w-100 float-start my-1 table-responsive">
+            <table class="table text-ttxt table-striped" id="trip_expenses_table">
+              <thead>
+                <tr class="bg-bblight text-white text-center">
+                  <th class="text-center">S/n</th>
+                  <th class="text-center">Expense</th>
+                  <th class="text-center">Amount</th>
+                  <th class="text-center">Details</th>
+                </tr>
+              </thead>
+              <tbody class="text-ttxt">
+                <tr>
+                  <td class="align-middle">1</td>
+                  <td class="align-middle">Fuel cost</td>
+                  <td class="align-middle">185,000 TZS</td>
+                  <td class="align-middle">Pesa ya mafuta makole dodoma</td>
+                </tr>
+                <tr>
+                  <td class="align-middle">2</td>
+                  <td class="align-middle">Fuel cost</td>
+                  <td class="align-middle">185,000 TZS</td>
+                  <td class="align-middle">Pesa ya mafuta makole dodoma</td>
+                </tr>
+                <tr>
+                  <td class="align-middle">3</td>
+                  <td class="align-middle">Fuel cost</td>
+                  <td class="align-middle">185,000 TZS</td>
+                  <td class="align-middle">Pesa ya mafuta makole dodoma</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="trip_gps" class="tab_div">
+          <h5>Truck's gps tracker..</h5><hr class="my-1" />
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="add_comment_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h3 class="modal-title text-white">Add new comment..</h3>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <form class="modal-body">
+            <div class="form-floating d-block w-100 float-start my-1">
+              <textarea class="form-control text-ttxt" id="trp_add_new_comment" placeholder="d" style="min-height:150px;"></textarea>
+              <label for="trp_add_new_comment" class="text-ttxt">Comment..</label>
+            </div>
+          </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success" id="trp_addnew_comment_btn" data-bs-dismiss="modal">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="add_expense_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h3 class="modal-title text-white">Add new expense..</h3>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <form class="modal-body">
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" max="{% now 'Y-m-d' %}" value="{% now 'Y-m-d' %}" class="form-control text-ttxt fs-6" id="trp_exp_date" placeholder="d" />
+              <label for="trp_exp_date" class="text-ttxt fs-6">Expense date</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="text" class="form-control text-ttxt fs-6" id="trp_exp_name" placeholder="d" />
+              <label for="trp_exp_name" class="text-ttxt fs-6">Expense name</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="text" class="form-control text-ttxt fs-6" id="trp_exp_amount" placeholder="d" />
+              <label for="trp_exp_amount" class="text-ttxt fs-6">Expense amount</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <textarea class="form-control text-ttxt" id="trp_exp_details" placeholder="d" style="min-height:150px;"></textarea>
+              <label for="trp_exp_details" class="text-ttxt">Expense description</label>
+            </div>
+          </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success" id="trk_submit_permit_btn" data-bs-dismiss="modal">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="mark_complete_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h3 class="modal-title text-white">Complete trip..?</h3>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating d-block w-100 float-start my-1">
+              <p class="text-start fs-6 py-2">Confirm that, the trip has been completed. Note that, after marking it as complete, you won't be able to add any further updates/data on this trip. Are you sure to continue..?</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Back</button>
+            <button type="button" class="btn btn-success" id="trp_complete_btn" data-bs-dismiss="modal">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="searchdiv input-group w-100 float-start">
+      <input type="text" class="form-control text-ttxt fs-5" id="trips_search" placeholder="Search.." autocomplete="off" />
+      <button type="button" class="btn btn-bblue text-white ms-1" id="trips_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+      <button class="btn btn-success text-white ms-1" type="button" title="Add new trip" data-bs-toggle="offcanvas" data-bs-target="#new_trip_canvas"><i class="fas fa-plus-circle"></i></button>
+    </div>
+
+    <div class="d-block w-100 float-start my-2 table-responsive">
+      <table class="table text-ttxt table-striped" id="trips_table">
+        <thead>
+          <tr class="bg-bblight text-white text-center">
+            <th class="text-center">S/n</th>
+            <th class="text-center">StartDate</th>
+            <th class="text-center">Origin</th>
+            <th class="text-center">Destination</th>
+            <th class="text-center">Truck</th>
+            <th class="text-center">Driver</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody class="text-ttxt">
+          <tr>
+            <td class="align-middle">1</td>
+            <td class="align-middle">02-Mar-2024</td>
+            <td class="align-middle">Mabibo-DSM</td>
+            <td class="align-middle">Kinshasa-Congo</td>
+            <td class="align-middle">T 482 CPS</td>
+            <td class="align-middle">Christian Masanja</td>
+            <td class="align-middle">Going</td>
+            <td class="align-middle">
+              <a class="btn btn-bblue" href="{% url 'trip_details' 5 %}">View</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="align-middle">2</td>
+            <td class="align-middle">18-Feb-2024</td>
+            <td class="align-middle">Makole-Dodoma</td>
+            <td class="align-middle">Karagwe-Kagera</td>
+            <td class="align-middle">T 936 EPK</td>
+            <td class="align-middle">Joseph Kwangela</td>
+            <td class="align-middle">Returning</td>
+            <td class="align-middle">
+              <a class="btn btn-bblue" href="{% url 'trip_details' 2 %}">View</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="align-middle">3</td>
+            <td class="align-middle">05-Feb-2024</td>
+            <td class="align-middle">Kigamboni-DSM</td>
+            <td class="align-middle">Kashai-Bukoba</td>
+            <td class="align-middle">T 285 CTF</td>
+            <td class="align-middle">Jongolo Mwaibuja</td>
+            <td class="align-middle">Complete</td>
+            <td class="align-middle">
+              <a class="btn btn-bblue" href="{% url 'trip_details' 10 %}">View</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="offcanvas offcanvas-start" id="new_trip_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h3 class="offcanvas-title text-white">Add new trip..</h3>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start">
+          <div class="formsms w-100 float-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="trp_truck" required>
+              <option value="">No truck selected</option>
+              <option value="1">Truck 1</option>
+              <option value="2">Truck 2</option>
+              <option value="3">Truck 3</option>
+            </select>
+            <label class="form-label text-ttxt" for="trp_truck">Select truck</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="trp_driver" required>
+              <option value="">No driver selected</option>
+              <option value="1">Driver 1</option>
+              <option value="2">Driver 2</option>
+              <option value="3">Driver 3</option>
+            </select>
+            <label class="form-label text-ttxt" for="trp_driver">Select driver</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trp_origin" placeholder="p" required />
+            <label for="trp_origin" class="text-ttxt fs-6">Trip origin</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trp_destination" placeholder="p" required />
+            <label for="trp_destination" class="text-ttxt fs-6">Trip destination</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trp_route" placeholder="p" />
+            <label for="trp_route" class="text-ttxt fs-6">Recommended route (optional)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt" id="trp_cargo_description" placeholder="d" style="min-height:150px;"></textarea>
+            <label for="trp_cargo_description" class="text-ttxt">Cargo description</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt" id="trp_extra_comment" placeholder="d" style="min-height:150px;"></textarea>
+            <label for="trp_extra_comment" class="text-ttxt">Extra comment (optional)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="trp_submit_btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/trips/trips.js' %}"></script>
+{% endblock %}

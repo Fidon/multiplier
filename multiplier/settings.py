@@ -7,8 +7,8 @@ SECRET_KEY = 'django-insecure-ys*4vnd1b2#-9^l(wk*^z@s@7k3$sud^^ctk2i=rpa2kqwoqxb
 
 DEBUG = False
 
-# ALLOWED_HOSTS = ['Fidon.pythonanywhere.com']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['Fidon.pythonanywhere.com']
+# ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -84,8 +84,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Africa/Dar_es_Salaam'
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "Africa/Dar_es_Salaam"
 USE_I18N = True
 USE_TZ = True
 
@@ -94,7 +94,7 @@ USE_TZ = True
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    'static/',
+    "static/",
 ]
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -105,11 +105,11 @@ STORAGES = {
 }
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # AUTH_USER_MODEL = 'dbase.CustomUser'

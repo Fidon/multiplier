@@ -152,6 +152,15 @@
     float: left;
     padding: 2px;
 }
+#contents .info_trailer .tab_container .tab_div .info div a {
+    border: 1px solid rgb(66,139,202,.5);
+    border-radius: 3px;
+    transition: all 0.5s ease;
+}
+#contents .info_trailer .tab_container .tab_div .info div a:hover {
+    background-color: rgb(66,139,202,.8);
+    color: #FFFFFF;
+}
 
 
 

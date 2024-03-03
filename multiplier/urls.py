@@ -8,6 +8,6 @@ urlpatterns = [
     path('auth/', v.login_page, name='auth_url'),
     path('home/', v.home_page, name='home_url'),
 
-
     path('fleet/', include('apps.fleet.urls')),
+    path('trips/', include('apps.trips.urls')),
 ]
