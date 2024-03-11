@@ -16,12 +16,12 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#truck_trips">Trips</a>
         </li>
-        <li class="nav-item">
+        {% comment %} <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#truck_permits">Permits</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#truck_maintenance">Maintenance</a>
-        </li>
+        </li> {% endcomment %}
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#truck_gps">GPS tracker</a>
         </li>
@@ -56,7 +56,7 @@
               <b>Trailer:</b> &nbsp; <a href="{% url 'trailer_details' 5 %}" class="d-inline-block px-2">Scania - T 652 DKY</a>
             </div>
             <div>
-              <b>Driver:</b> &nbsp; Hassan Msangi
+              <b>Driver:</b> &nbsp; <a href="{% url 'trailer_details' 5 %}" class="d-inline-block px-2">Hassan Msangi</a>
             </div>
             <div>
               <b>Contact:</b> &nbsp; 0757 957 579
@@ -98,7 +98,7 @@
             </table>
           </div>
         </div>
-        <div id="truck_permits" class="tab_div">
+        {% comment %} <div id="truck_permits" class="tab_div">
           <h5 class="position-relative">Truck's permits list..<span class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add_permit_modal"><i class="fas fa-plus-circle"></i> Add new</span></h5><hr class="my-1" />
           <div class="d-block w-100 float-start my-1 table-responsive">
             <table class="table text-ttxt table-striped" id="truck_permits_table">
@@ -147,7 +147,7 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </div> {% endcomment %}
         <div id="truck_gps" class="tab_div">
           <h5>Truck's gps tracker..</h5><hr class="my-1" />
         </div>
@@ -170,7 +170,7 @@
             <th class="text-center">Model</th>
             <th class="text-center">Trailer</th>
             <th class="text-center">Maintenance</th>
-            <th class="text-center">Permits</th>
+            <th class="text-center">Available</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
@@ -182,7 +182,7 @@
             <td class="align-middle">S045-TY08-5879</td>
             <td class="align-middle">T 482 CPS</td>
             <td class="align-middle">13-Feb-2024</td>
-            <td class="align-middle">04</td>
+            <td class="align-middle">Yes</td>
             <td class="align-middle">
               <a class="btn btn-bblue" href="{% url 'truck_details' 5 %}">View</a>
             </td>
@@ -208,26 +208,43 @@
             <label for="trk_type" class="text-ttxt fs-6">Type</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="trk_horse" required>
+              <option value="">--select--</option>
+              <option value="Terias">Terias</option>
+              <option value="Double diff">Double diff</option>
+            </select>
+            <label class="form-label text-ttxt" for="trk_horse">Select horse type</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
             <input type="text" class="form-control text-ttxt fs-6" id="trk_model" placeholder="p" required />
             <label for="trk_model" class="text-ttxt fs-6">Model</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <select class="form-select text-ttxt" id="trk_trailer" required>
-              <option value="">No trailer selected</option>
+              <option value="">--select--</option>
               <option value="1">Trailer 1</option>
               <option value="2">Trailer 2</option>
               <option value="3">Trailer 3</option>
             </select>
             <label class="form-label text-ttxt" for="trk_trailer">Select trailer</label>
           </div>
-          <div class="form-floating d-block w-100 float-start my-2 text-start">
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="trk_trailer" required>
+              <option value="">--select--</option>
+              <option value="1">Driver 1</option>
+              <option value="2">Driver 2</option>
+              <option value="3">Driver 3</option>
+            </select>
+            <label class="form-label text-ttxt" for="trk_trailer">Select driver</label>
+          </div>
+          {% comment %} <div class="form-floating d-block w-100 float-start my-2 text-start">
             <span class="d-inline-block py-1 px-2 fs-6 border border-bblight rounded text-bblue" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#add_permit_modal">Add permit &nbsp; <i class="fas fa-plus-circle"></i></span>
             <div class="d-block w-100 float-start mt-1">
               <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names1 &nbsp; <i class="fas fa-times-circle text-danger" style="cursor:pointer;"></i></span>
               <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names2 &nbsp; <i class="fas fa-times-circle text-danger" style="cursor:pointer;"></i></span>
               <span class="d-inline-block p-2 border rounded text-ttxt mb-1">Permit added names3 &nbsp; <i class="fas fa-times-circle text-danger" style="cursor:pointer;"></i></span>
             </div>
-          </div>
+          </div> {% endcomment %}
           <div class="form-floating d-block w-100 float-start my-3 text-end">
             <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
             <button type="submit" class="btn btn-success d-inline-block" id="trk_submit_btn">Save</button>

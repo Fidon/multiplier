@@ -10,3 +10,14 @@ def trips_page(request, tp=None):
         'trip_info': tp,
     }
     return render(request, 'trips/trips.html', context)
+
+@never_cache
+def batches_page(request, bt=None):
+    context = {
+        'batch_info': bt,
+    }
+    return render(request, 'trips/batches.html', context)
+
+@never_cache
+def op_report_page(request):
+    return render(request, 'trips/report.html')

@@ -5,10 +5,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-ys*4vnd1b2#-9^l(wk*^z@s@7k3$sud^^ctk2i=rpa2kqwoqxb'
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['Fidon.pythonanywhere.com']
-# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['Fidon.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.dbase',
+    'apps.finance',
     'apps.fleet',
     'apps.trips',
     'apps.control',

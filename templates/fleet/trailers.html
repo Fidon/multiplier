@@ -18,10 +18,10 @@
         </li>
         {% comment %} <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#trailer_permits">Permits</a>
-        </li> {% endcomment %}
+        </li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#trailer_maintenance">Maintenance</a>
-        </li>
+        </li> {% endcomment %}
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#trailer_gps">GPS tracker</a>
         </li>
@@ -116,7 +116,7 @@
               </tbody>
             </table>
           </div>
-        </div> {% endcomment %}
+        </div>
         <div id="trailer_maintenance" class="tab_div">
           <h5>Trailer's maintenance history..</h5><hr class="my-1" />
           <div class="d-block w-100 float-start my-1 table-responsive">
@@ -141,7 +141,7 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </div> {% endcomment %}
         <div id="trailer_gps" class="tab_div">
           <h5>Trailer's gps tracker..</h5><hr class="my-1" />
         </div>
@@ -194,17 +194,12 @@
             <label for="trl_regnumber" class="text-ttxt fs-6">Registration number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trl_model" placeholder="p" required />
-            <label for="trl_model" class="text-ttxt fs-6">Model</label>
-          </div>
-          <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt" id="trl_truck" required>
-              <option value="">No truck selected</option>
-              <option value="1">Truck 1</option>
-              <option value="2">Truck 2</option>
-              <option value="3">Truck 3</option>
+            <select class="form-select text-ttxt" id="trl_type" required>
+              <option value="">--select--</option>
+              <option value="Super single">Super single</option>
+              <option value="Double tyre">Double tyre</option>
             </select>
-            <label class="form-label text-ttxt" for="trl_truck">Select truck</label>
+            <label class="form-label text-ttxt" for="trl_type">Select type</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
             <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>

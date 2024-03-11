@@ -19,6 +19,13 @@ def trailer_page(request, tr=None):
     return render(request, 'fleet/trailers.html', context)
 
 @never_cache
+def driver_page(request, d=None):
+    context = {
+        'driver_info': d,
+    }
+    return render(request, 'fleet/drivers.html', context)
+
+@never_cache
 def permits_page(request, p=None):
     context = {
         'permit_info': p,

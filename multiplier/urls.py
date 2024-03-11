@@ -9,5 +9,6 @@ urlpatterns = [
     path('home/', v.home_page, name='home_url'),
 
     path('fleet/', include('apps.fleet.urls')),
-    path('trips/', include('apps.trips.urls')),
+    path('op/', include('apps.trips.urls')),
+    path('fin/', include('apps.finance.urls')),
 ]

@@ -39,16 +39,25 @@
             <div class="submenu">
               <a href="{% url 'trucks' %}" class="a2"><i class="fas fa-arrow-right"></i> &nbsp; Trucks</a>
               <a href="{% url 'trailers' %}" class="a3"><i class="fas fa-arrow-right"></i> &nbsp; Trailers</a>
-              <a href="{% url 'permits' %}" class="a4"><i class="fas fa-arrow-right"></i> &nbsp; Permits</a>
-              <a href="{% url 'maintenance' %}" class="a5"><i class="fas fa-arrow-right"></i> &nbsp; Maintenance</a>
+              {% comment %} <a href="{% url 'permits' %}" class="a4"><i class="fas fa-arrow-right"></i> &nbsp; Permits</a>
+              <a href="{% url 'maintenance' %}" class="a5"><i class="fas fa-arrow-right"></i> &nbsp; Maintenance</a> {% endcomment %}
+              <a href="{% url 'drivers' %}" class="a7"><i class="fas fa-arrow-right"></i> &nbsp; Drivers</a>
             </div>
           </div>
           <div class="link">
-            <span class="header" id="trips_menu_btn"><i class="fas fa-route"></i> &nbsp; Trips <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
+            <span class="header" id="trips_menu_btn"><i class="fas fa-tasks"></i> &nbsp; Operations <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
             <div class="submenu">
+              <a href="{% url 'batches' %}" class="a8"><i class="fas fa-arrow-right"></i> &nbsp; Batches</a>
               <a href="{% url 'trips' %}" class="a6"><i class="fas fa-arrow-right"></i> &nbsp; Trips</a>
-              <a href="#" class="link3"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu2</a>
-              <a href="#" class="link4"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu3</a>
+              <a href="{% url 'op_report' %}" class="a9"><i class="fas fa-arrow-right"></i> &nbsp; Report</a>
+            </div>
+          </div>
+          <div class="link">
+            <span class="header" id="finance_menu_btn"><i class="fas fa-dollar-sign"></i> &nbsp; Finance <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
+            <div class="submenu">
+              <a href="{% url 'expenses' %}" class="a10"><i class="fas fa-arrow-right"></i> &nbsp; Expenses</a>
+              <a href="{% url 'revenue' %}" class="a11"><i class="fas fa-arrow-right"></i> &nbsp; Revenues</a>
+              <a href="{% url 'fin_report' %}" class="a12"><i class="fas fa-arrow-right"></i> &nbsp; Reports</a>
             </div>
           </div>
           <div class="link">
