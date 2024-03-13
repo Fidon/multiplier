@@ -1,26 +1,23 @@
 {% extends 'master.html' %}
 {% load static %}
 {% block title %}
-  Expenses | Multiplier ltd
+  Income | Multiplier ltd
 {% endblock %}
 {% block styles %}
-  <link href="{% static 'css/finance/expenses.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'css/finance/income.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block contents %}
-  {% if exp_info %}
-    <div class="exp_info">
+  {% if income_info %}
+    <div class="income_info">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" data-bs-toggle="tab" href="#exp_basic_info">Information</a>
+          <a class="nav-link active" data-bs-toggle="tab" href="#income_info_div">Information</a>
         </li>
-        {% comment %} <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="tab" href="#exp_update_div">Update</a>
-        </li> {% endcomment %}
       </ul>
 
       <div class="tab_container">
-        <div id="exp_basic_info" class="tab_div">
-          <h5>Expense information..</h5><hr class="my-1" />
+        <div id="income_info_div" class="tab_div">
+          <h5>Income details..</h5><hr class="my-1" />
           <div class="info">
             <div>
               <b>Record date:</b> &nbsp; 04-Mar-2024 13:19:48
@@ -36,26 +33,26 @@
             </div>
             <hr class="d-block w-100 my-3" />
             <div>
-              <b>Expense date:</b> &nbsp; 03-Mar-2024
+              <b>Income date:</b> &nbsp; 03-Mar-2024
             </div>
             <div>
-              <b>Expense by:</b> &nbsp; <a href="{% url 'truck_details' 5 %}" class="d-inline-block px-2">TruckTrailer: T498DTB/T573EHA</a>
+              <b>Income from:</b> &nbsp; <a href="{% url 'truck_details' 5 %}" class="d-inline-block px-2">TruckTrailer: T498DTB/T573EHA</a>
             </div>
             <div>
               <b>Details:</b> &nbsp; Maintenance
             </div>
             <div>
-              <b>Expense amount:</b> &nbsp; 125,000.00 TZS (48.09 USD)
+              <b>Income amount:</b> &nbsp; 125,000.00 TZS (48.09 USD)
             </div>
             <div>
-              <b>Sending fees(TZS):</b> &nbsp; 1,510.00
+              <b>Withdraw fees(TZS):</b> &nbsp; 1,510.00
             </div>
             <div>
               <b>Balance(TZS):</b> &nbsp; 1,987,780.65
             </div>
 
             <div class="d-block w-100 py-3">
-              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="exp_update_info_btn" data-bs-toggle="modal" data-bs-target="#exp_updateinfo_modal">Update info</button>
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="income_update_btn" data-bs-toggle="modal" data-bs-target="#income_update_modal">Update info</button>
               <button type="button" class="btn btn-danger d-inline-block m-2" id="trailer_delete_btn">Delete</button>
             </div>
           </div>
@@ -63,20 +60,20 @@
       </div>
     </div>
 
-    <div class="modal fade" id="exp_updateinfo_modal">
+    <div class="modal fade" id="income_update_modal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg-bblue">
-            <h5 class="modal-title text-white">Expense info update..</h5>
+            <h5 class="modal-title text-white">Income info update..</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
           </div>
           <form class="modal-body">
             <div class="form-floating d-block w-100 float-start my-1">
-              <input type="date" class="form-control text-ttxt fs-6" id="exp_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
-              <label for="exp_date" class="text-ttxt fs-6">Expense date</label>
+              <input type="date" class="form-control text-ttxt fs-6" id="inc_up_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
+              <label for="inc_up_date" class="text-ttxt fs-6">Income date</label>
             </div>
             <div class="form-floating d-block w-100 float-start my-1">
-              <select class="form-select text-ttxt" id="exp_target" required>
+              <select class="form-select text-ttxt" id="inc_up_source" required>
                 <option value="">--select--</option>
                 <optgroup label="Fleet">
                   <option value="1">Truck</option>
@@ -93,33 +90,33 @@
                   <option value="8">Others</option>
                 </optgroup>
               </select>
-              <label class="form-label text-ttxt" for="exp_target">Select expense target</label>
+              <label class="form-label text-ttxt" for="inc_up_source">Select income source</label>
             </div>
             <div class="form-floating d-block w-100 float-start my-1">
-              <select class="form-select text-ttxt" id="exp_specify" required>
+              <select class="form-select text-ttxt" id="inc_up_specify" required>
                 <option value="">--select--</option>
               </select>
-              <label class="form-label text-ttxt" for="exp_specify">Select truck/driver/trip/staff</label>
+              <label class="form-label text-ttxt" for="inc_up_specify">Select truck/driver/trip/staff</label>
             </div>
             <div class="form-floating d-block w-100 float-start my-1">
-              <input type="text" class="form-control text-ttxt fs-6" id="exp_bief" placeholder="p" required />
-              <label for="exp_brief" class="text-ttxt fs-6">Expense brief details</label>
+              <input type="text" class="form-control text-ttxt fs-6" id="inc_up_brief" placeholder="p" required />
+              <label for="inc_up_brief" class="text-ttxt fs-6">Income brief details</label>
             </div>
             <div class="form-floating d-block w-100 float-start my-1">
-              <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_amount_tzs" placeholder="p" required />
-              <label for="exp_amount_tzs" class="text-ttxt fs-6">Expense amount(TZS)</label>
+              <input type="number" min="1" class="form-control text-ttxt fs-6" id="inc_up_amount_tzs" placeholder="p" required />
+              <label for="inc_up_amount_tzs" class="text-ttxt fs-6">Income amount(TZS)</label>
             </div>
             <div class="form-floating d-block w-100 float-start my-1">
-              <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_fees_tzs" placeholder="p" required />
-              <label for="exp_fees_tzs" class="text-ttxt fs-6">Sending fees(TZS)</label>
+              <input type="number" min="1" class="form-control text-ttxt fs-6" id="inc_up_fees_tzs" placeholder="p" required />
+              <label for="inc_up_fees_tzs" class="text-ttxt fs-6">Withdrawal fees(TZS)</label>
             </div>
             <div class="form-floating d-block w-100 float-start my-1">
-              <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_balance_tzs" placeholder="p" required />
-              <label for="exp_balance_tzs" class="text-ttxt fs-6">Balance(TZS)</label>
+              <input type="number" min="0" class="form-control text-ttxt fs-6" id="inc_up_balance_tzs" placeholder="p" required />
+              <label for="inc_up_balance_tzs" class="text-ttxt fs-6">Balance(TZS)</label>
             </div>
             <div class="form-floating d-block w-100 float-start my-1">
-              <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_amount_usd" placeholder="p" required />
-              <label for="exp_amount_usd" class="text-ttxt fs-6">Expense amount(USD)</label>
+              <input type="number" min="0" class="form-control text-ttxt fs-6" id="inc_up_amount_usd" placeholder="p" required />
+              <label for="inc_up_amount_usd" class="text-ttxt fs-6">Income amount(USD)</label>
             </div>
           </form>
           <div class="modal-footer">
@@ -131,9 +128,9 @@
     </div>
   {% else %}
     <div class="searchdiv input-group w-100 float-start">
-      <input type="text" class="form-control text-ttxt fs-5" id="expense_search" placeholder="Search.." autocomplete="off" />
-      <button type="button" class="btn btn-bblue text-white ms-1" id="exp_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
-      <button class="btn btn-success text-white ms-1" type="button" title="Add new expense" data-bs-toggle="offcanvas" data-bs-target="#new_expense_canvas"><i class="fas fa-plus-circle"></i></button>
+      <input type="text" class="form-control text-ttxt fs-5" id="income_search" placeholder="Search.." autocomplete="off" />
+      <button type="button" class="btn btn-bblue text-white ms-1" id="income_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+      <button class="btn btn-success text-white ms-1" type="button" title="Add new income" data-bs-toggle="offcanvas" data-bs-target="#new_income_canvas"><i class="fas fa-plus-circle"></i></button>
     </div>
 
     <div class="d-block w-100 float-start my-2 table-responsive">
@@ -141,10 +138,10 @@
         <thead>
           <tr class="bg-bblight text-white text-center">
             <th class="text-center">S/n</th>
-            <th class="text-center">ExpenseDate</th>
-            <th class="text-center">ExpenseInfo</th>
+            <th class="text-center">IncomeDate</th>
+            <th class="text-center">IncomeInfo</th>
             <th class="text-center">Amount(TZS)</th>
-            <th class="text-center">SendingFees(TZS)</th>
+            <th class="text-center">WithdrawFees(TZS)</th>
             <th class="text-center">Balance(TZS)</th>
             <th class="text-center">Amount(USD)</th>
             <th class="text-center">Action</th>
@@ -154,33 +151,33 @@
           <tr>
             <td>1</td>
             <td>02-Mar-2024</td>
-            <td class="text-start">Truck: Maintenance</td>
+            <td class="text-start">Batch: Alistair</td>
             <td class="text-end pe-2">100,000.00</td>
             <td class="text-end pe-2">1,440.00</td>
             <td class="text-end pe-2">954,655.00</td>
             <td class="text-end pe-2">40.30</td>
             <td>
-              <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+              <a href="{% url 'income_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="offcanvas offcanvas-start" id="new_expense_canvas">
+    <div class="offcanvas offcanvas-start" id="new_income_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h3 class="offcanvas-title text-white">Add new expense..</h3>
+        <h3 class="offcanvas-title text-white">Add new income..</h3>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
         <form class="d-block w-100 float-start">
           <div class="formsms w-100 float-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="date" class="form-control text-ttxt fs-6" id="exp_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
-            <label for="exp_date" class="text-ttxt fs-6">Expense date</label>
+            <input type="date" class="form-control text-ttxt fs-6" id="inc_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
+            <label for="inc_date" class="text-ttxt fs-6">Income date</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt" id="exp_target" required>
+            <select class="form-select text-ttxt" id="inc_source" required>
               <option value="">--select--</option>
               <optgroup label="Fleet">
                 <option value="1">Truck</option>
@@ -197,33 +194,33 @@
                 <option value="8">Others</option>
               </optgroup>
             </select>
-            <label class="form-label text-ttxt" for="exp_target">Select expense target</label>
+            <label class="form-label text-ttxt" for="inc_source">Select income source</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt" id="exp_specify" required>
+            <select class="form-select text-ttxt" id="inc_specify" required>
               <option value="">--select--</option>
             </select>
-            <label class="form-label text-ttxt" for="exp_specify">Select truck/driver/trip/staff</label>
+            <label class="form-label text-ttxt" for="inc_specify">Select truck/driver/trip/staff</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="exp_bief" placeholder="p" required />
-            <label for="exp_brief" class="text-ttxt fs-6">Expense brief details</label>
+            <input type="text" class="form-control text-ttxt fs-6" id="inc_brief_info" placeholder="p" required />
+            <label for="inc_brief_info" class="text-ttxt fs-6">Income brief details</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_amount_tzs" placeholder="p" required />
-            <label for="exp_amount_tzs" class="text-ttxt fs-6">Expense amount(TZS)</label>
+            <input type="number" min="1" class="form-control text-ttxt fs-6" id="inc_amount_tzs" placeholder="p" required />
+            <label for="inc_amount_tzs" class="text-ttxt fs-6">Income amount(TZS)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_fees_tzs" placeholder="p" required />
-            <label for="exp_fees_tzs" class="text-ttxt fs-6">Sending fees(TZS)</label>
+            <input type="number" min="1" class="form-control text-ttxt fs-6" id="inc_fees_tzs" placeholder="p" required />
+            <label for="inc_fees_tzs" class="text-ttxt fs-6">Withdrawal fees(TZS)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_balance_tzs" placeholder="p" required />
-            <label for="exp_balance_tzs" class="text-ttxt fs-6">Balance(TZS)</label>
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="inc_balance_tzs" placeholder="p" required />
+            <label for="inc_balance_tzs" class="text-ttxt fs-6">Balance(TZS)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_amount_usd" placeholder="p" required />
-            <label for="exp_amount_usd" class="text-ttxt fs-6">Expense amount(USD)</label>
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="inc_amount_usd" placeholder="p" required />
+            <label for="inc_amount_usd" class="text-ttxt fs-6">Income amount(USD)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
             <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
@@ -235,5 +232,5 @@
   {% endif %}
 {% endblock %}
 {% block scripts %}
-  <script src="{% static 'js/finance/expenses.js' %}"></script>
+  <script src="{% static 'js/finance/income.js' %}"></script>
 {% endblock %}

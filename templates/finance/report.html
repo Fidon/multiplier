@@ -1,0 +1,112 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Finance report | Multiplier ltd
+{% endblock %}
+{% block styles %}
+  <link href="{% static 'css/finance/report.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block contents %}
+  <div class="searchdiv input-group w-100 float-start">
+    <input type="text" class="form-control text-ttxt fs-5" id="report_search" placeholder="Search.." autocomplete="off" />
+    <button type="button" class="btn btn-bblue text-white ms-1" id="report_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+  </div>
+
+  <div class="d-block w-100 float-start my-2 table-responsive">
+    <table class="table text-ttxt table-striped" id="finance_report_table">
+      <thead>
+        <tr class="bg-bblight text-white text-center">
+          <th class="text-center">S/n</th>
+          <th class="text-center">Type</th>
+          <th class="text-center">Date</th>
+          <th class="text-center">Details</th>
+          <th class="text-center">Amount(TZS)</th>
+          <th class="text-center">Fees(TZS)</th>
+          <th class="text-center">Balance(TZS)</th>
+          <th class="text-center">Amount(USD)</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody class="text-ttxt text-center align-middle">
+        <tr>
+          <td>1</td>
+          <td class="text-start">Income</td>
+          <td>02-Mar-2024</td>
+          <td class="text-start">Batch: Alistair</td>
+          <td class="text-end pe-2">100,000.00</td>
+          <td class="text-end pe-2">1,440.00</td>
+          <td class="text-end pe-2">954,655.00</td>
+          <td class="text-end pe-2">40.30</td>
+          <td>
+            <button class="btn btn-sm btn-bblue text-white" data-bs-toggle="modal" data-bs-target="#exp_inc_details">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="text-start">Expense</td>
+          <td>02-Mar-2024</td>
+          <td class="text-start">TruckTrailer: Permit</td>
+          <td class="text-end pe-2">100,000.00</td>
+          <td class="text-end pe-2">1,440.00</td>
+          <td class="text-end pe-2">954,655.00</td>
+          <td class="text-end pe-2">40.30</td>
+          <td>
+            <button class="btn btn-sm btn-bblue text-white" data-bs-toggle="modal" data-bs-target="#exp_inc_details">View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal fade" id="exp_inc_details">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-bblue">
+          <h5 class="modal-title text-white">Income/Expense details..</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="info text-ttxt1 text-start">
+            <div>
+              <b>Record date:</b> &nbsp; 04-Mar-2024 13:19:48
+            </div>
+            <div>
+              <b>Recorded by:</b> &nbsp; Saidi Mustapha
+            </div>
+            <div>
+              <b>Last updated on:</b> &nbsp; -
+            </div>
+            <div>
+              <b>Last updated by:</b> &nbsp; -
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div>
+              <b>Income date:</b> &nbsp; 03-Mar-2024
+            </div>
+            <div>
+              <b>Income from:</b> &nbsp; TruckTrailer: T498DTB/T573EHA
+            </div>
+            <div>
+              <b>Details:</b> &nbsp; Maintenance
+            </div>
+            <div>
+              <b>Income amount:</b> &nbsp; 125,000.00 TZS (48.09 USD)
+            </div>
+            <div>
+              <b>Withdraw fees(TZS):</b> &nbsp; 1,510.00
+            </div>
+            <div>
+              <b>Balance(TZS):</b> &nbsp; 1,987,780.65
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/finance/report.js' %}"></script>
+{% endblock %}

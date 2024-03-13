@@ -12,12 +12,12 @@ def expenses_page(request, exp=None):
     return render(request, 'finance/expenses.html', context)
 
 @never_cache
-def revenue_page(request, rev=None):
+def income_page(request, income=None):
     context = {
-        'rev_info': rev
+        'income_info': income
     }
-    return render(request, 'finance/revenue.html', context)
+    return render(request, 'finance/income.html', context)
 
 @never_cache
 def reports_page(request):
-    return render(request, 'finance/reports.html')
+    return render(request, 'finance/report.html')
