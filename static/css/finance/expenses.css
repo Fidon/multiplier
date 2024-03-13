@@ -1,4 +1,5 @@
-#navbar .link .a10 {
+#navbar .link .a10,
+#menucanvas .link .a10 {
     background-color: rgba(240,240,240,.9);
     color: #2D2D2D;
 }
