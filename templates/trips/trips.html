@@ -326,6 +326,7 @@
             <th class="text-center">startDate</th>
             <th class="text-center">Status</th>
             <th class="text-center">currentPosition</th>
+            <th class="text-center">Type</th>
             <th class="text-center">daysTaken</th>
             <th class="text-center">Complete</th>
             <th class="text-center">Action</th>
@@ -342,6 +343,7 @@
             <td class="align-middle">02-Mar-2024</td>
             <td class="align-middle text-start">Enroute</td>
             <td class="align-middle text-start">Kibaigwa-Dom</td>
+            <td class="align-middle">Going</td>
             <td class="align-middle">10</td>
             <td class="align-middle">No</td>
             <td class="align-middle">
@@ -358,6 +360,7 @@
             <td class="align-middle">02-Mar-2024</td>
             <td class="align-middle text-start">Breakdown</td>
             <td class="align-middle text-start">Kibaha</td>
+            <td class="align-middle">Return</td>
             <td class="align-middle">10</td>
             <td class="align-middle">No</td>
             <td class="align-middle">
@@ -374,6 +377,7 @@
             <td class="align-middle">02-Mar-2024</td>
             <td class="align-middle text-start">Enroute</td>
             <td class="align-middle text-start">Kibaigwa-Dom</td>
+            <td class="align-middle">Going</td>
             <td class="align-middle">10</td>
             <td class="align-middle">Yes</td>
             <td class="align-middle">
@@ -429,6 +433,10 @@
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="text" class="form-control text-ttxt fs-6" id="trp_destination" placeholder="p" required />
             <label for="trp_destination" class="text-ttxt fs-6">Trip destination</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trp_cargoweight" placeholder="p" required />
+            <label for="trp_cargoweight" class="text-ttxt fs-6">Cargo weight in tonnes</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <textarea class="form-control text-ttxt" id="trp_cargo" placeholder="d" style="min-height:150px;"></textarea>

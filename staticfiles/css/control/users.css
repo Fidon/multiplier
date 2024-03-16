@@ -1,5 +1,5 @@
-#navbar .link .a10,
-#menucanvas .link .a10 {
+#navbar .link .a14,
+#menucanvas .link .a14 {
     background-color: rgba(240,240,240,.9);
     color: #2D2D2D;
 }
@@ -79,20 +79,19 @@
     text-align: center;
 }
 
-
-
-#contents .exp_info {
+/* Truck's information/details page */
+#contents .user_info {
     display: block;
     width: 100%;
     float: left;
     padding: 0;
     color: #696969;
 }
-#contents .exp_info a {
+#contents .user_info a {
     color: inherit;
     text-decoration: none;
 }
-#contents .exp_info ul {
+#contents .user_info ul {
     display: block;
     width: 100%;
     height: auto;
@@ -104,13 +103,13 @@
     overflow-y: hidden;
     font-size: 0;
 }
-#contents .exp_info ul li {
+#contents .user_info ul li {
     display: inline-block;
     width: auto;
     font-size: 15px;
     padding: 0;
 }
-#contents .exp_info ul li a {
+#contents .user_info ul li a {
     display: block;
     width: auto;
     min-width: 100px;
@@ -120,46 +119,51 @@
     text-align: center;
     padding: 8px 15px;
 }
-#contents .exp_info ul li a.active {
+#contents .user_info ul li a.active {
     background-color: #F0F0F0;
     color: #696969;
     border-radius: 0;
 }
-#contents .exp_info .tab_container {
+#contents .user_info .tab_container {
     display: block;
     width: 100%;
     height: auto;
     float: left;
     text-align: left;
-    padding: 15px 0;
+    padding: 20px 5px;
     color: #696969;
 }
-#contents .exp_info .tab_container .tab_div {
+#contents .user_info .tab_container .tab_div {
     display: none;
     width: 100%;
     float: left;
     padding: 0;
 }
-#contents .exp_info .tab_container .tab_div:nth-child(1) {
+#contents .user_info .tab_container .tab_div:nth-child(1) {
     display: block;
 }
-#contents .exp_info .tab_container .tab_div .info {
+#contents .user_info .tab_container .tab_div .info {
     display: block;
     width: 100%;
     float: left;
     font-size: 16px;
 }
-#contents .exp_info .tab_container .tab_div .info div {
+#contents .user_info .tab_container .tab_div h5 span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+#contents .user_info .tab_container .tab_div .info div {
     width: 50%;
     float: left;
     padding: 2px;
 }
-#contents .exp_info .tab_container .tab_div .info div a {
+#contents .user_info .tab_container .tab_div .info div a {
     border: 1px solid rgb(66,139,202,.5);
     border-radius: 3px;
     transition: all 0.5s ease;
 }
-#contents .exp_info .tab_container .tab_div .info div a:hover {
+#contents .user_info .tab_container .tab_div .info div a:hover {
     background-color: rgb(66,139,202,.8);
     color: #FFFFFF;
 }
@@ -168,7 +172,7 @@
 
 
 @media only screen and (max-width: 768px) {
-    #contents .exp_info .tab_container .tab_div .info div {
+    #contents .user_info .tab_container .tab_div .info div {
         display: block;
         width: 100%;
     }

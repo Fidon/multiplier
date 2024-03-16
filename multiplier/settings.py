@@ -1,11 +1,12 @@
 from pathlib import Path
 import os
+import pytz
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-ys*4vnd1b2#-9^l(wk*^z@s@7k3$sud^^ctk2i=rpa2kqwoqxb'
 
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['Fidon.pythonanywhere.com']
 ALLOWED_HOSTS = ['*']
@@ -86,9 +87,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "Africa/Dar_es_Salaam"
-USE_I18N = True
 USE_TZ = True
+USE_I18N = True
+TIME_ZONE = "Africa/Dar_es_Salaam"
+
 
 
 

@@ -11,4 +11,5 @@ urlpatterns = [
     path('fleet/', include('apps.fleet.urls')),
     path('op/', include('apps.trips.urls')),
     path('fin/', include('apps.finance.urls')),
+    path('manage/', include('apps.control.urls')),
 ]

@@ -56,16 +56,16 @@
             <span class="header" id="finance_menu_btn"><i class="fas fa-dollar-sign"></i> &nbsp; Finance <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
             <div class="submenu">
               <a href="{% url 'expenses' %}" class="a10"><i class="fas fa-arrow-right"></i> &nbsp; Expenses</a>
-              <a href="{% url 'income' %}" class="a11"><i class="fas fa-arrow-right"></i> &nbsp; Income</a>
+              <a href="{% url 'revenue' %}" class="a11"><i class="fas fa-arrow-right"></i> &nbsp; Revenue</a>
+              <a href="{% url 'invoices' %}" class="a13"><i class="fas fa-arrow-right"></i> &nbsp; Invoices</a>
               <a href="{% url 'fin_report' %}" class="a12"><i class="fas fa-arrow-right"></i> &nbsp; Reports</a>
             </div>
           </div>
           <div class="link">
-            <span class="header"><i class="fas fa-users"></i> &nbsp; Admin <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
+            <span class="header" id="admin_menu_btn"><i class="fas fa-users"></i> &nbsp; Admin <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i></span>
             <div class="submenu">
-              <a href="#" class="link2"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu1</a>
-              <a href="#" class="link3"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu2</a>
-              <a href="#" class="link4"><i class="fas fa-arrow-right"></i> &nbsp; Sub menu3</a>
+              <a href="{% url 'users' %}" class="a14"><i class="fas fa-arrow-right"></i> &nbsp; Users</a>
+              <a href="{% url 'logs' %}" class="a15"><i class="fas fa-arrow-right"></i> &nbsp; System logs</a>
             </div>
           </div>
           <div class="link">

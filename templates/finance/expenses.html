@@ -130,46 +130,322 @@
       </div>
     </div>
   {% else %}
-    <div class="searchdiv input-group w-100 float-start">
-      <input type="text" class="form-control text-ttxt fs-5" id="expense_search" placeholder="Search.." autocomplete="off" />
-      <button type="button" class="btn btn-bblue text-white ms-1" id="exp_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
-      <button class="btn btn-success text-white ms-1" type="button" title="Add new expense" data-bs-toggle="offcanvas" data-bs-target="#new_expense_canvas"><i class="fas fa-plus-circle"></i></button>
+    <div class="exp_info">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#exp_ops_div">Expenses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#exp_allow_div">Allowances</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#exp_fuel_div">Fuel</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#exp_permit_div">Permits</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#exp_others_div">Others</a>
+        </li>
+      </ul>
+
+      <div class="tab_container">
+        {% comment %}expenses{% endcomment %}
+        <div id="exp_ops_div" class="tab_div">
+          <div class="searchdiv input-group w-100 float-start">
+            <input type="text" class="form-control text-ttxt fs-5" id="exp_ops_search" placeholder="Search.." autocomplete="off" />
+            <button type="button" class="btn btn-bblue text-white ms-1" id="exp_ops_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+            <button class="btn btn-success text-white ms-1" type="button" title="Add new ops expense" data-bs-toggle="offcanvas" data-bs-target="#new_ops_expense_canvas"><i class="fas fa-plus-circle"></i></button>
+          </div>
+
+          <div class="d-block w-100 float-start my-2 table-responsive">
+            <table class="table text-ttxt text-center align-middle table-striped" id="ops_expenses_table">
+              <thead>
+                <tr class="bg-bblight text-white">
+                  <th>S/n</th>
+                  <th>ExpenseDate</th>
+                  <th>TruckTrailer</th>
+                  <th>BatchNo</th>
+                  <th>ExpenseInfo</th>
+                  <th>Amount(TZS)</th>
+                  <th>SendingFees(TZS)</th>
+                  <th>WithdrawFees(TZS)</th>
+                  <th>Balance(TZS)</th>
+                  <th>Amount(USD)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody class="text-ttxt text-center align-middle">
+                <tr>
+                  <td>1</td>
+                  <td>02-Mar-2024</td>
+                  <td class="text-start">T956DHY/T748EKR</td>
+                  <td class="text-start">B. 1.05.2024</td>
+                  <td class="text-start">Truck/Trailer: Maintenance</td>
+                  <td class="text-end pe-2">100,000.00</td>
+                  <td class="text-end pe-2">1,440.00</td>
+                  <td class="text-end pe-2">3,985.00</td>
+                  <td class="text-end pe-2">954,655.00</td>
+                  <td class="text-end pe-2">40.30</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>02-Mar-2024</td>
+                  <td class="text-start">T956DHY</td>
+                  <td class="text-start">B. 1.05.2024</td>
+                  <td class="text-start">Truck: Maintenance</td>
+                  <td class="text-end pe-2">100,000.00</td>
+                  <td class="text-end pe-2">1,440.00</td>
+                  <td class="text-end pe-2">3,985.00</td>
+                  <td class="text-end pe-2">954,655.00</td>
+                  <td class="text-end pe-2">40.30</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>02-Mar-2024</td>
+                  <td class="text-start">T956DHY</td>
+                  <td class="text-start">B. 1.05.2024</td>
+                  <td class="text-start">Trailer: Maintenance</td>
+                  <td class="text-end pe-2">100,000.00</td>
+                  <td class="text-end pe-2">1,440.00</td>
+                  <td class="text-end pe-2">3,985.00</td>
+                  <td class="text-end pe-2">954,655.00</td>
+                  <td class="text-end pe-2">40.30</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>02-Mar-2024</td>
+                  <td class="text-start">T956DHY/T748EKR</td>
+                  <td class="text-start">B. 1.05.2024</td>
+                  <td class="text-start">Truck/Trailer: Maintenance</td>
+                  <td class="text-end pe-2">100,000.00</td>
+                  <td class="text-end pe-2">1,440.00</td>
+                  <td class="text-end pe-2">3,985.00</td>
+                  <td class="text-end pe-2">954,655.00</td>
+                  <td class="text-end pe-2">40.30</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>02-Mar-2024</td>
+                  <td class="text-start">T956DHY/T748EKR</td>
+                  <td class="text-start">B. 1.05.2024</td>
+                  <td class="text-start">Truck/Trailer: Maintenance</td>
+                  <td class="text-end pe-2">100,000.00</td>
+                  <td class="text-end pe-2">1,440.00</td>
+                  <td class="text-end pe-2">3,985.00</td>
+                  <td class="text-end pe-2">954,655.00</td>
+                  <td class="text-end pe-2">40.30</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% comment %}allowances{% endcomment %}
+        <div id="exp_allow_div" class="tab_div">
+          <div class="searchdiv input-group w-100 float-start">
+            <input type="text" class="form-control text-ttxt fs-5" id="exp_all_search" placeholder="Search.." autocomplete="off" />
+            <button type="button" class="btn btn-bblue text-white ms-1" id="exp_all_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+            <button class="btn btn-success text-white ms-1" type="button" title="Add new allowance" data-bs-toggle="offcanvas" data-bs-target="#new_allowance_canvas"><i class="fas fa-plus-circle"></i></button>
+          </div>
+
+          <div class="d-block w-100 float-start my-2 table-responsive">
+            <table class="table text-ttxt text-center align-middle table-striped" id="exp_allowances_table">
+              <thead>
+                <tr class="bg-bblight text-white">
+                  <th>S/n</th>
+                  <th>AllowanceDate</th>
+                  <th>DriverName</th>
+                  <th>TruckTrailer</th>
+                  <th>BatchNo</th>
+                  <th>Type</th>
+                  <th>Amount(TZS)</th>
+                  <th>SendingFees(TZS)</th>
+                  <th>WithdrawFees(TZS)</th>
+                  <th>Balance(TZS)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>13-Mar-2024</td>
+                  <td class="text-start">Deogratias Matemu</td>
+                  <td class="text-start">T489BGT/T984EST</td>
+                  <td class="text-start">B. 1.04.2024</td>
+                  <td class="text-start">Going</td>
+                  <td class="text-end pe-2">100,000.00</td>
+                  <td class="text-end pe-2">1,440.50</td>
+                  <td class="text-end pe-2">4,500.00</td>
+                  <td class="text-end pe-2">95,000.00</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% comment %}fuel expenses{% endcomment %}
+        <div id="exp_fuel_div" class="tab_div">
+          <div class="searchdiv input-group w-100 float-start">
+            <input type="text" class="form-control text-ttxt fs-5" id="exp_fuel_search" placeholder="Search.." autocomplete="off" />
+            <button type="button" class="btn btn-bblue text-white ms-1" id="exp_fuel_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+            <button class="btn btn-success text-white ms-1" type="button" title="Add new fuel" data-bs-toggle="offcanvas" data-bs-target="#new_fuel_canvas"><i class="fas fa-plus-circle"></i></button>
+          </div>
+
+          <div class="d-block w-100 float-start my-2 table-responsive">
+            <table class="table text-ttxt text-center align-middle table-striped" id="exp_fuel_table">
+              <thead>
+                <tr class="bg-bblight text-white">
+                  <th>S/n</th>
+                  <th>Date</th>
+                  <th>TruckTrailer</th>
+                  <th>BatchNo</th>
+                  <th>TripType</th>
+                  <th>Station</th>
+                  <th>Volume</th>
+                  <th>Price</th>
+                  <th>Amount(TZS)</th>
+                  <th>SendingFees(TZS)</th>
+                  <th>WithdrawFees(TZS)</th>
+                  <th>Balance(TZS)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>13-Mar-2024</td>
+                  <td class="text-start">T489BGT/T984EST</td>
+                  <td class="text-start">B. 1.04.2024</td>
+                  <td class="text-start">Going</td>
+                  <td class="text-end pe-2">Puma-Kibaha</td>
+                  <td class="text-end pe-2">84.3 L</td>
+                  <td class="text-end pe-2">2,455.15</td>
+                  <td class="text-end pe-2">206,969.15</td>
+                  <td class="text-end pe-2">2,455.15</td>
+                  <td class="text-end pe-2">2,455.15</td>
+                  <td class="text-end pe-2">200,455.15</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% comment %}permits{% endcomment %}
+        <div id="exp_permit_div" class="tab_div">
+          <div class="searchdiv input-group w-100 float-start">
+            <input type="text" class="form-control text-ttxt fs-5" id="exp_permit_search" placeholder="Search.." autocomplete="off" />
+            <button type="button" class="btn btn-bblue text-white ms-1" id="exp_permit_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+            <button class="btn btn-success text-white ms-1" type="button" title="Add new permit" data-bs-toggle="offcanvas" data-bs-target="#new_permit_canvas"><i class="fas fa-plus-circle"></i></button>
+          </div>
+
+          <div class="d-block w-100 float-start my-2 table-responsive">
+            <table class="table text-ttxt text-center align-middle table-striped" id="exp_permit_table">
+              <thead>
+                <tr class="bg-bblight text-white">
+                  <th>S/n</th>
+                  <th>Date</th>
+                  <th>TruckTrailer</th>
+                  <th>BatchNo</th>
+                  <th>TripType</th>
+                  <th>PermitType</th>
+                  <th>Quantity</th>
+                  <th>Rate</th>
+                  <th>Amount(TZS)</th>
+                  <th>SendingFees(TZS)</th>
+                  <th>WithdrawFees(TZS)</th>
+                  <th>Balance(TZS)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>13-Mar-2024</td>
+                  <td class="text-start">T489BGT/T984EST</td>
+                  <td class="text-start">B. 1.04.2024</td>
+                  <td class="text-start">Going</td>
+                  <td class="text-end pe-2">Puma-Kibaha</td>
+                  <td class="text-end pe-2">481</td>
+                  <td class="text-end pe-2">2,512.37</td>
+                  <td class="text-end pe-2">206,969.15</td>
+                  <td class="text-end pe-2">2,455.15</td>
+                  <td class="text-end pe-2">2,455.15</td>
+                  <td class="text-end pe-2">200,455.15</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% comment %}other expenses{% endcomment %}
+        <div id="exp_others_div" class="tab_div">
+          <div class="searchdiv input-group w-100 float-start">
+            <input type="text" class="form-control text-ttxt fs-5" id="other_exp_search" placeholder="Search.." autocomplete="off" />
+            <button type="button" class="btn btn-bblue text-white ms-1" id="other_exp_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+            <button class="btn btn-success text-white ms-1" type="button" title="Add new expense" data-bs-toggle="offcanvas" data-bs-target="#new_otherexpense_canvas"><i class="fas fa-plus-circle"></i></button>
+          </div>
+
+          <div class="d-block w-100 float-start my-2 table-responsive">
+            <table class="table text-ttxt text-center align-middle table-striped" id="other_exp_table">
+              <thead>
+                <tr class="bg-bblight text-white">
+                  <th>S/n</th>
+                  <th>Date</th>
+                  <th>Department</th>
+                  <th>Description</th>
+                  <th>Amount(TZS)</th>
+                  <th>SendingFees(TZS)</th>
+                  <th>WithdrawFees(TZS)</th>
+                  <th>Balance(TZS)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>13-Mar-2024</td>
+                  <td class="text-start">Operations</td>
+                  <td class="text-start">Random description paragraph...</td>
+                  <td class="text-end pe-2">206,969.15</td>
+                  <td class="text-end pe-2">2,455.15</td>
+                  <td class="text-end pe-2">2,455.15</td>
+                  <td class="text-end pe-2">200,455.15</td>
+                  <td>
+                    <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="d-block w-100 float-start my-2 table-responsive">
-      <table class="table text-ttxt table-striped" id="expenses_table">
-        <thead>
-          <tr class="bg-bblight text-white text-center">
-            <th class="text-center">S/n</th>
-            <th class="text-center">ExpenseDate</th>
-            <th class="text-center">ExpenseInfo</th>
-            <th class="text-center">Amount(TZS)</th>
-            <th class="text-center">SendingFees(TZS)</th>
-            <th class="text-center">Balance(TZS)</th>
-            <th class="text-center">Amount(USD)</th>
-            <th class="text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody class="text-ttxt text-center align-middle">
-          <tr>
-            <td>1</td>
-            <td>02-Mar-2024</td>
-            <td class="text-start">Truck: Maintenance</td>
-            <td class="text-end pe-2">100,000.00</td>
-            <td class="text-end pe-2">1,440.00</td>
-            <td class="text-end pe-2">954,655.00</td>
-            <td class="text-end pe-2">40.30</td>
-            <td>
-              <a href="{% url 'exp_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="offcanvas offcanvas-start" id="new_expense_canvas">
+    {% comment %}canvas to add new ops expense{% endcomment %}
+    <div class="offcanvas offcanvas-start" id="new_ops_expense_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h3 class="offcanvas-title text-white">Add new expense..</h3>
+        <h5 class="offcanvas-title text-white">Add new expense..</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
@@ -181,41 +457,35 @@
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <select class="form-select text-ttxt" id="exp_target" required>
-              <option value="">--select--</option>
-              <optgroup label="Fleet">
-                <option value="1">Truck</option>
-                <option value="2">Trailer</option>
-                <option value="3">TruckTrailer</option>
-                <option value="4">Driver</option>
-              </optgroup>
-              <optgroup label="Operations">
-                <option value="5">Batch</option>
-                <option value="6">Trip</option>
-              </optgroup>
-              <optgroup label="Others">
-                <option value="7">Staff</option>
-                <option value="8">Others</option>
-              </optgroup>
+              <option value="">--select batch--</option>
+              <option value="1">Batch 4564</option>
+              <option value="2">Batch 587</option>
+              <option value="3">Batch 348</option>
+              <option value="4">Batch 1984</option>
             </select>
-            <label class="form-label text-ttxt" for="exp_target">Select expense target</label>
+            <label class="form-label text-ttxt" for="exp_target">Select batch</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <select class="form-select text-ttxt" id="exp_specify" required>
               <option value="">--select--</option>
             </select>
-            <label class="form-label text-ttxt" for="exp_specify">Select truck/driver/trip/staff</label>
+            <label class="form-label text-ttxt" for="exp_specify">Select truck/trailer</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="exp_bief" placeholder="p" required />
-            <label for="exp_brief" class="text-ttxt fs-6">Expense brief details</label>
+            <input type="text" class="form-control text-ttxt fs-6" id="exp_describe" placeholder="p" required />
+            <label for="exp_describe" class="text-ttxt fs-6">Expense brief description</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_amount_tzs" placeholder="p" required />
             <label for="exp_amount_tzs" class="text-ttxt fs-6">Expense amount(TZS)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_fees_tzs" placeholder="p" required />
-            <label for="exp_fees_tzs" class="text-ttxt fs-6">Sending fees(TZS)</label>
+            <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_sending_fees" placeholder="p" required />
+            <label for="exp_sending_fees" class="text-ttxt fs-6">Sending fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_withdrawfees" placeholder="p" required />
+            <label for="exp_withdrawfees" class="text-ttxt fs-6">Withdraw fees(TZS)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_balance_tzs" placeholder="p" required />
@@ -227,7 +497,234 @@
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
             <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
-            <button type="submit" class="btn btn-success d-inline-block" id="trl_submit_btn">Save</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="exp_submit_btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% comment %}canvas to add new allowance expense{% endcomment %}
+    <div class="offcanvas offcanvas-start" id="new_allowance_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h5 class="offcanvas-title text-white">Add new allowance..</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start">
+          <div class="formsms w-100 float-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" class="form-control text-ttxt fs-6" id="exp_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
+            <label for="exp_date" class="text-ttxt fs-6">Allowance date</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="exp_target" required>
+              <option value="">--select driver--</option>
+              <option value="1">Driver 1</option>
+              <option value="2">Driver 2</option>
+              <option value="3">Driver 3</option>
+              <option value="4">Driver 4</option>
+            </select>
+            <label class="form-label text-ttxt" for="exp_target">Select driver</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1 p-2 text-start text-ttxt1 rounded-1 shadow-sm bg-white">
+            <b>BatchNo:</b> Batch 1.04.2024<br />
+            <b>TruckTrailer:</b> T489BGT/T569ERT<br />
+            <b>TripType:</b> Going
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_amount_tzs" placeholder="p" required />
+            <label for="exp_amount_tzs" class="text-ttxt fs-6">Allowance amount(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_sending_fees" placeholder="p" required />
+            <label for="exp_sending_fees" class="text-ttxt fs-6">Sending fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_withdrawfees" placeholder="p" required />
+            <label for="exp_withdrawfees" class="text-ttxt fs-6">Withdraw fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_balance_tzs" placeholder="p" required />
+            <label for="exp_balance_tzs" class="text-ttxt fs-6">Balance(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="allowance_submit_btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% comment %}canvas to add new fuel expense{% endcomment %}
+    <div class="offcanvas offcanvas-start" id="new_fuel_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h5 class="offcanvas-title text-white">Add new fuel expense..</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start">
+          <div class="formsms w-100 float-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" class="form-control text-ttxt fs-6" id="exp_fuel_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
+            <label for="exp_fuel_date" class="text-ttxt fs-6">Fuel date</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="exp_fuel_trucktrailer" required>
+              <option value="">--select truck/trailer--</option>
+              <option value="1">Driver 1</option>
+              <option value="2">Driver 2</option>
+              <option value="3">Driver 3</option>
+              <option value="4">Driver 4</option>
+            </select>
+            <label class="form-label text-ttxt" for="exp_fuel_trucktrailer">Select truck/trailer</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1 p-2 text-start text-ttxt1 rounded-1 shadow-sm bg-white">
+            <b>BatchNo:</b> Batch 1.04.2024<br />
+            <b>Driver:</b> Christopher Masanjila<br />
+            <b>TripType:</b> Going
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="exp_fuel_station" placeholder="p" required />
+            <label for="exp_fuel_station" class="text-ttxt fs-6">Filling station</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_fuel_price" placeholder="p" required />
+            <label for="exp_fuel_price" class="text-ttxt fs-6">Fuel price(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_fuel_amount" placeholder="p" required />
+            <label for="exp_fuel_amount" class="text-ttxt fs-6">Fuel amount(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="fuel_sending_fees" placeholder="p" required />
+            <label for="fuel_sending_fees" class="text-ttxt fs-6">Sending fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_withdrawfees" placeholder="p" required />
+            <label for="fuel_withdrawfees" class="text-ttxt fs-6">Withdraw fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_balance_tzs" placeholder="p" required />
+            <label for="exp_balance_tzs" class="text-ttxt fs-6">Balance(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="fuel_exp_submit_btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% comment %}canvas to add new permit expense{% endcomment %}
+    <div class="offcanvas offcanvas-start" id="new_permit_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h5 class="offcanvas-title text-white">Add new permit..</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start">
+          <div class="formsms w-100 float-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" class="form-control text-ttxt fs-6" id="exp_fuel_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
+            <label for="exp_fuel_date" class="text-ttxt fs-6">Permit date</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="exp_fuel_trucktrailer" required>
+              <option value="">--select truck/trailer--</option>
+              <option value="1">Driver 1</option>
+              <option value="2">Driver 2</option>
+              <option value="3">Driver 3</option>
+              <option value="4">Driver 4</option>
+            </select>
+            <label class="form-label text-ttxt" for="exp_fuel_trucktrailer">Select truck/trailer</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1 p-2 text-start text-ttxt1 rounded-1 shadow-sm bg-white">
+            <b>BatchNo:</b> Batch 1.04.2024<br />
+            <b>Driver:</b> Christopher Masanjila<br />
+            <b>TripType:</b> Going
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="exp_permit_type" placeholder="p" required />
+            <label for="exp_permit_type" class="text-ttxt fs-6">Permit type</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_permit_qty" placeholder="p" required />
+            <label for="exp_permit_qty" class="text-ttxt fs-6">Quantity</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_permit_rate" placeholder="p" required />
+            <label for="exp_permit_rate" class="text-ttxt fs-6">Rate</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_fuel_amount" placeholder="p" required />
+            <label for="exp_fuel_amount" class="text-ttxt fs-6">Amount(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="fuel_sending_fees" placeholder="p" required />
+            <label for="fuel_sending_fees" class="text-ttxt fs-6">Sending fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_withdrawfees" placeholder="p" required />
+            <label for="fuel_withdrawfees" class="text-ttxt fs-6">Withdraw fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_balance_tzs" placeholder="p" required />
+            <label for="exp_balance_tzs" class="text-ttxt fs-6">Balance(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="fuel_exp_submit_btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% comment %}canvas to add new expense{% endcomment %}
+    <div class="offcanvas offcanvas-start" id="new_otherexpense_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h5 class="offcanvas-title text-white">Add other expense..</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start">
+          <div class="formsms w-100 float-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" class="form-control text-ttxt fs-6" id="exp_fuel_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
+            <label for="exp_fuel_date" class="text-ttxt fs-6">Expense date</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="exp_fuel_trucktrailer" required>
+              <option value="">--select department--</option>
+              <option value="1">Driver 1</option>
+              <option value="2">Driver 2</option>
+              <option value="3">Driver 3</option>
+              <option value="4">Driver 4</option>
+            </select>
+            <label class="form-label text-ttxt" for="exp_fuel_trucktrailer">Select department</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt fs-6" id="expense_describe" placeholder="d" style="min-height:150px;" required></textarea>
+            <label for="expense_describe" class="text-ttxt fs-6">Expense description</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_fuel_amount" placeholder="p" required />
+            <label for="exp_fuel_amount" class="text-ttxt fs-6">Amount(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="fuel_sending_fees" placeholder="p" required />
+            <label for="fuel_sending_fees" class="text-ttxt fs-6">Sending fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_withdrawfees" placeholder="p" required />
+            <label for="fuel_withdrawfees" class="text-ttxt fs-6">Withdraw fees(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="exp_balance_tzs" placeholder="p" required />
+            <label for="exp_balance_tzs" class="text-ttxt fs-6">Balance(TZS)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="other_exp_submit_btn">Save</button>
           </div>
         </form>
       </div>

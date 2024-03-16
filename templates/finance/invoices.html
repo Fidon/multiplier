@@ -1,0 +1,296 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Invoices | Multiplier ltd
+{% endblock %}
+{% block styles %}
+  <link href="{% static 'css/finance/invoices.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block contents %}
+  {% if invoice_info %}
+    <div class="invoice_info">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#invoice_info_div">Information</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#invoice_print_div">Print view</a>
+        </li>
+      </ul>
+
+      <div class="tab_container">
+        <div id="invoice_info_div" class="tab_div">
+          <h5>Invoice details..</h5><hr class="my-1" />
+          <div class="info">
+            <div>
+              <b>Record date:</b> &nbsp; 04-Mar-2024 13:19:48
+            </div>
+            <div>
+              <b>Recorded by:</b> &nbsp; Saidi Mustapha
+            </div>
+            <div>
+              <b>Last updated on:</b> &nbsp; -
+            </div>
+            <div>
+              <b>Last updated by:</b> &nbsp; -
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div>
+              <b>Invoice date:</b> &nbsp; 03-Mar-2024
+            </div>
+            <div>
+              <b>Invoice number:</b> &nbsp; MIL00215
+            </div>
+            <div>
+              <b>Due date:</b> &nbsp; 29-Mar-2024
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div class="d-block w-100">
+              <b>Bill to:</b> &nbsp; BLIGA LOGISTICS COMPANY LIMITED<br />TIN: 143-002-748<br />VRN: 40043921-N<br />Email: accounts@bilgagroup.co.tz<br />Tel: +255 627 164 846
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div class="d-block w-100">
+              <b>Invoice description:</b> &nbsp; Tax invoice for transportation of Granular Sulphur from DSM(TZ) to Kolowezi(DRC).
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div class="d-block w-100 table-responsive">
+              <span class="d-block w-100 fs-6 px-1 text-start text-ttxt1 border-bottom border-bblue fw-bold">Invoice items</span>
+              <table class="w-100">
+                <thead class="bg-bblight text-white">
+                  <tr class="bg-bblight text-white text-center">
+                    <th class="text-center py-1">S/n</th>
+                    <th class="text-center py-1">ItemNames</th>
+                    <th class="text-center py-1">ItemQty</th>
+                    <th class="text-center py-1">ItemPrice</th>
+                    <th class="text-center py-1">ItemAmount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td class="text-start">Transport charges: T594DEA/T327DTY</td>
+                    <td>29.73</td>
+                    <td>220 USD</td>
+                    <td>1,962.18</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td class="text-start">Transport charges: T594DEA/T327DTY</td>
+                    <td>29.73</td>
+                    <td>220 USD</td>
+                    <td>1,962.18</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td class="text-start">Transport charges: T594DEA/T327DTY</td>
+                    <td>29.73</td>
+                    <td>220 USD</td>
+                    <td>1,962.18</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td class="text-start">Transport charges: T594DEA/T327DTY</td>
+                    <td>29.73</td>
+                    <td>220 USD</td>
+                    <td>1,962.18</td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" class="text-start">.</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td class="text-start">Subtotal:</td>
+                    <td>7,685.74</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td class="text-start">Taxable:</td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td class="text-start">Tax rate:</td>
+                    <td>0.00%</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td class="text-start">Tax due:</td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td class="text-start">Others:</td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td class="text-start fw-bold">TOTAL:</td>
+                    <td class="fw-bold">7,685.74</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div class="d-block w-100">
+              <b>Invoice comments:</b><br />1. 70% advance payment for Going Trip $220 per tonnage<br />2. 30% balance payment to be paid after 7 days P.O.D submitted<br />3. 100% return payment at $275 per tonnage.
+            </div>
+
+            <div class="d-block w-100 py-3">
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="invoice_update_btn" data-bs-toggle="modal" data-bs-target="#invoice_update_modal">Update info</button>
+              <button type="button" class="btn btn-success d-inline-block m-2" id="invoice_paid_btn" data-bs-toggle="modal" data-bs-target="#invoice_paid_modal">Mark as paid</button>
+              <button type="button" class="btn btn-danger d-inline-block m-2" id="trailer_delete_btn">Delete</button>
+            </div>
+          </div>
+        </div>
+        <div id="invoice_print_div" class="tab_div">
+          <h5>Invoice print view..</h5><hr class="my-1" />
+          <div class="d-block w-100 table-responsive">
+            <h1>Print view</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="searchdiv input-group w-100 float-start">
+      <input type="text" class="form-control text-ttxt fs-5" id="invoice_search" placeholder="Search.." autocomplete="off" />
+      <button type="button" class="btn btn-bblue text-white ms-1" id="invoice_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+      <button class="btn btn-success text-white ms-1" type="button" title="Add new invoice" data-bs-toggle="modal" data-bs-target="#new_invoice_modal"><i class="fas fa-plus-circle"></i></button>
+    </div>
+
+    <div class="d-block w-100 float-start my-2 table-responsive">
+      <table class="table text-ttxt table-striped" id="expenses_table">
+        <thead>
+          <tr class="bg-bblight text-white text-center">
+            <th class="text-center">S/n</th>
+            <th class="text-center">InvoiceDate</th>
+            <th class="text-center">Invoice#</th>
+            <th class="text-center">DueDate</th>
+            <th class="text-center">BilledTo</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">TotalAmount</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody class="text-ttxt text-center align-middle">
+          <tr>
+            <td>1</td>
+            <td>02-Mar-2024</td>
+            <td class="text-start">MIL00215</td>
+            <td>30-Mar-2024</td>
+            <td class="text-start">BLIGA LOGISTICS COMPANY LTD</td>
+            <td class="text-start">Unpaid</td>
+            <td class="text-end pe-2">7,879.74</td>
+            <td>
+              <a href="{% url 'invoice_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>02-Mar-2024</td>
+            <td class="text-start">MIL00215</td>
+            <td>19-Mar-2024</td>
+            <td class="text-start">BLIGA LOGISTICS COMPANY LTD</td>
+            <td class="text-start">Paid</td>
+            <td class="text-end pe-2">7,879.74</td>
+            <td>
+              <a href="{% url 'invoice_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>02-Mar-2024</td>
+            <td class="text-start">MIL00215</td>
+            <td>13-Mar-2024</td>
+            <td class="text-start">BLIGA LOGISTICS COMPANY LTD</td>
+            <td class="text-start">Expired</td>
+            <td class="text-end pe-2">7,879.74</td>
+            <td>
+              <a href="{% url 'invoice_details' 1 %}" class="btn btn-sm btn-bblue text-white">View</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="modal fade" id="new_invoice_modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h3 class="modal-title text-white">Create new invoice..</h3>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <form class="modal-body">
+            <div class="formsms w-100 float-start my-1"></div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt fs-6" id="invoice_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
+              <label for="invoice_date" class="text-ttxt fs-6">Invoice date</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="number" min="1" class="form-control text-ttxt fs-6" id="invoice_number" placeholder="p" required />
+              <label for="invoice_number" class="text-ttxt fs-6">Invoice number</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt fs-6" id="invoice_duedate" placeholder="p" required />
+              <label for="invoice_duedate" class="text-ttxt fs-6">Invoice due date</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <textarea class="form-control text-ttxt fs-6" id="invoice_bill" placeholder="d" style="min-height:150px;" required></textarea>
+              <label for="invoice_bill" class="text-ttxt fs-6">Bill address</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <textarea class="form-control text-ttxt fs-6" id="invoice_describe" placeholder="d" style="min-height:150px;" required></textarea>
+              <label for="invoice_describe" class="text-ttxt fs-6">Invoice description</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1 table-responsive">
+              <span class="d-block w-100 fs-6 px-1 text-start text-ttxt border-bottom border-bblue">Add invoice items..</span>
+              <table class="table text-ttxt table-borderless" id="invoice_items_table">
+                <tr>
+                  <td class="p-1">
+                    <input type="text" class="form-control text-ttxt fs-6" placeholder="Invoice item" required />
+                  </td>
+                  <td class="p-1">
+                    <input type="text" class="form-control text-ttxt fs-6" placeholder="Item quantity" required />
+                  </td>
+                  <td class="p-1">
+                    <input type="text" class="form-control text-ttxt fs-6" placeholder="Price(USD)" required />
+                  </td>
+                  <td class="p-1">
+                    <input type="text" class="form-control text-ttxt fs-6" placeholder="Amount" required />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="p-1 text-start">
+                    <button class="btn btn-sm btn-bblue text-white">Add item</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="number" min="0" class="form-control text-ttxt fs-6" id="invoice_taxable" placeholder="p" required />
+              <label for="invoice_taxable" class="text-ttxt fs-6">Taxable amount</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="number" min="0" class="form-control text-ttxt fs-6" id="invoice_taxrate" placeholder="p" required />
+              <label for="invoice_taxrate" class="text-ttxt fs-6">Tax rate(%)</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="number" min="0" class="form-control text-ttxt fs-6" id="invoice_others" placeholder="p" required />
+              <label for="invoice_others" class="text-ttxt fs-6">Other deductions</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <textarea class="form-control text-ttxt fs-6" id="invoice_comments" placeholder="d" style="min-height:150px;" required></textarea>
+              <label for="invoice_comments" class="text-ttxt fs-6">Other comments (optional)</label>
+            </div>
+          </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success" id="new_invoice_submit_btn" data-bs-dismiss="modal">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/finance/invoices.js' %}"></script>
+{% endblock %}
