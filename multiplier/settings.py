@@ -93,8 +93,6 @@ TIME_ZONE = "Africa/Dar_es_Salaam"
 
 
 
-
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     "static/",
@@ -115,9 +113,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# AUTH_USER_MODEL = 'dbase.CustomUser'
-# LOGIN_URL = '/auth/'
-# LOGIN_REDIRECT_URL = '/reception/home/'
+AUTH_USER_MODEL = 'control.CustomUser'
+LOGIN_URL = '/auth/'
+LOGIN_REDIRECT_URL = '/home/'
 # AUTHENTICATION_BACKENDS = [
 #     'django.contrib.auth.backends.ModelBackend',
 #     'mwezai_dispensary.backends.CaseInsensitiveModelBackend',

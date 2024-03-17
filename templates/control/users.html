@@ -1,7 +1,7 @@
 {% extends 'master.html' %}
 {% load static %}
 {% block title %}
-  Admin-users | Multiplier ltd
+  Users | Multiplier ltd
 {% endblock %}
 {% block styles %}
   <link href="{% static 'css/control/users.css' %}" rel="stylesheet" type="text/css" />
@@ -171,22 +171,23 @@
           </tr>
         </tbody>
       </table>
+      {{ dtime }}
     </div>
 
     <div class="offcanvas offcanvas-start" id="new_user_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h3 class="offcanvas-title text-white">Add new user/staff..</h3>
+        <h5 class="offcanvas-title text-white">Add new user/staff..</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
-        <form class="d-block w-100 float-start">
-          <div class="formsms w-100 float-start my-1"></div>
+        <form class="d-block w-100 float-start" id="new_user_form" action="{% url 'users_actions' %}" autocomplete="off">
+          <div class="formsms w-100 float-start text-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
             <select class="form-select text-ttxt fs-6" id="user_dept" required>
               <option value="">--select department--</option>
-              <option value="1">Operations</option>
-              <option value="2">Finance</option>
-              <option value="3">Deepartment 3</option>
+              {% for dept in departments %}
+                <option value="{{ dept.id }}">{{ dept.name }}</option>
+              {% endfor %}
             </select>
             <label class="form-label text-ttxt fs-6" for="user_dept">Select user department</label>
           </div>
@@ -207,15 +208,15 @@
             <label class="form-label text-ttxt fs-6" for="user_gender">Select gender</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="number" min="0" class="form-control text-ttxt fs-6" id="user_contact" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="user_contact" placeholder="p" />
             <label for="user_contact" class="text-ttxt fs-6">Mobile</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <textarea class="form-control text-ttxt fs-6" id="user_comment" placeholder="d" style="min-height:150px;"></textarea>
+            <textarea class="form-control text-ttxt fs-6" id="user_comment" placeholder="d" style="min-height:120px;"></textarea>
             <label for="user_comment" class="text-ttxt fs-6">Comment (optional)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
-            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="button" class="btn btn-danger d-inline-block me-2" id="user_cancel_btn" data-bs-dismiss="offcanvas">Cancel</button>
             <button type="submit" class="btn btn-success d-inline-block" id="user_submit_btn">Save</button>
           </div>
         </form>

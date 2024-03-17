@@ -119,30 +119,30 @@
 
     <div class="offcanvas offcanvas-start" id="new_driver_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h3 class="offcanvas-title text-white">Add new driver..</h3>
+        <h5 class="offcanvas-title text-white">Add new driver..</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
-        <form class="d-block w-100 float-start">
-          <div class="formsms w-100 float-start my-1"></div>
+        <form class="d-block w-100 float-start" id="adnew_driver_form" action="{% url 'driver_actions' %}" autocomplete="off">
+          <div class="formsms w-100 float-start text-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="text" class="form-control text-ttxt fs-6" id="drv_fullname" placeholder="p" required />
-            <label for="drv_fullname" class="text-ttxt fs-6">Fullname</label>
+            <label for="drv_fullname" class="form-label text-ttxt fs-6">Fullname</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="text" class="form-control text-ttxt fs-6" id="drv_license" placeholder="p" required />
-            <label for="drv_license" class="text-ttxt fs-6">License</label>
+            <label for="drv_license" class="form-label text-ttxt fs-6">License number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="drv_contact" placeholder="p" required />
-            <label for="drv_contact" class="text-ttxt fs-6">Contact</label>
+            <input type="text" class="form-control text-ttxt fs-6" id="drv_phone" placeholder="p" required />
+            <label for="drv_phone" class="form-label text-ttxt fs-6">Phone number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <textarea class="form-control text-ttxt" id="drv_comment" placeholder="d" style="min-height:150px;"></textarea>
-            <label for="drv_comment" class="text-ttxt">Extra comment (optional)</label>
+            <textarea class="form-control text-ttxt fs-6" id="drv_describe" placeholder="d" style="min-height:100px;"></textarea>
+            <label for="drv_describe" class="form-label text-ttxt fs-6">Description (optional)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
-            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="button" class="btn btn-danger d-inline-block me-2" id="drv_cancel_btn" data-bs-dismiss="offcanvas">Cancel</button>
             <button type="submit" class="btn btn-success d-inline-block" id="drv_submit_btn">Save</button>
           </div>
         </form>

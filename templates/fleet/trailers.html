@@ -183,26 +183,30 @@
 
     <div class="offcanvas offcanvas-start" id="new_trailer_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h3 class="offcanvas-title text-white">Add new trailer..</h3>
+        <h5 class="offcanvas-title text-white">Add new trailer..</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
-        <form class="d-block w-100 float-start">
-          <div class="formsms w-100 float-start my-1"></div>
+        <form class="d-block w-100 float-start" id="new_trailer_form" action="{% url 'trailer_actions' %}" autocomplete="off">
+          <div class="formsms w-100 float-start text-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="text" class="form-control text-ttxt fs-6" id="trl_regnumber" placeholder="p" required />
             <label for="trl_regnumber" class="text-ttxt fs-6">Registration number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt" id="trl_type" required>
+            <select class="form-select text-ttxt fs-6" id="trl_type" required>
               <option value="">--select--</option>
               <option value="Super single">Super single</option>
               <option value="Double tyre">Double tyre</option>
             </select>
-            <label class="form-label text-ttxt" for="trl_type">Select type</label>
+            <label class="form-label text-ttxt fs-6" for="trl_type">Select trailer type</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt fs-6" id="trl_describe" placeholder="d" style="min-height:100px;"></textarea>
+            <label for="trl_describe" class="form-label text-ttxt fs-6">Description (optional)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
-            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas" id="trl_cancel_btn">Cancel</button>
             <button type="submit" class="btn btn-success d-inline-block" id="trl_submit_btn">Save</button>
           </div>
         </form>

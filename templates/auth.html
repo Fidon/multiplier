@@ -16,9 +16,9 @@
     <div id="container" class="d-block w-100 position-relative">
       <div class="form_div text-center shadow-lg rounded">
         <img src="{% static 'imgs/logo2.png' %}" />
-        <form id="loginForm" action="{% url 'auth_url' %}" method="post" autocomplete="off" class="d-block w-100">
+        <form id="login_auth_form" action="{% url 'auth_url' %}" method="post" autocomplete="off" class="d-block w-100">
           {% csrf_token %}
-          <div class="formsms text-start"></div>
+          <div class="formsms text-start mb-1"></div>
           <div class="form-floating">
             <input type="text" class="form-control text-ttxt1" id="auth_username" placeholder="a" required autofocus />
             <label for="auth_username" class="text-ttxt1">Username</label>
@@ -28,7 +28,7 @@
             <label for="auth_password" class="text-ttxt1">Password</label>
           </div>
           <div class="form-floating mt-3">
-            <button type="submit" id="auth_button" class="btn btn-lg btn-bblue text-white d-inline-block float-end">Sign In</button>
+            <button type="submit" id="auth_submit_button" class="btn btn-lg btn-bblue text-white d-inline-block float-end">Sign In</button>
           </div>
         </form>
       </div>
