@@ -26,6 +26,7 @@ $(function () {
                 if(response.success) {
                     window.location.href = "/home";
                 } else {
+                    $("#auth_submit_button").html("Sign In").attr('type', 'submit');
                     var fdback = `<div class="alert alert-danger alert-dismissible fade show px-2 m-0 d-block w-100"><i class='fas fa-exclamation-circle'></i> ${response.sms} <button type="button" class="btn-close d-inline-block" data-bs-dismiss="alert"></button></div>`;
                     $("#login_auth_form .formsms").html(fdback).show();
                 }
