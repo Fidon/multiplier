@@ -1,4 +1,5 @@
 {% extends 'master.html' %}
+{% load tmp_filters %}
 {% load static %}
 {% block title %}
   Drivers | Multiplier ltd
@@ -23,55 +24,67 @@
           <h5>Driver information..</h5><hr class="my-1" />
           <div class="info">
             <div>
-              <b>Record date:</b> &nbsp; 19-Feb-2024 16:52:46
+              <b>Reg. date:</b> &nbsp; {{ driver.regdate }}
             </div>
             <div>
-              <b>Recorded by:</b> &nbsp; Jonathan Mosha Masawe
+              <b>Registered by:</b> &nbsp; {{ driver.regby }}
             </div>
             <div>
-              <b>Last edited by:</b> &nbsp; -
+              <b>Last edited on:</b> &nbsp; {{ driver.lastEdit }}
             </div>
             <div>
-              <b>Fullname:</b> &nbsp; Masanja Jonathan Matabuduka
+              <b>Last edited by:</b> &nbsp; {{ driver.editby }}
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div>
+              <b>Fullname:</b> &nbsp; {{ driver.fullname }}
             </div>
             <div>
-              <b>License number:</b> &nbsp; 4002439519
+              <b>License number:</b> &nbsp; {{ driver.license }}
             </div>
             <div>
-              <b>Contact:</b> &nbsp; 0757389540
+              <b>Contact:</b> &nbsp; {{ driver.phone }}
             </div>
             <div>
-              <b>Truck:</b> &nbsp; <a href="{% url 'truck_details' 5 %}" class="d-inline-block px-2">T579EHY/T319DTZ</a>
+              {% if driver.truck_id %}
+                <b>Truck:</b> &nbsp; <a href="{% url 'truck_details' driver.truck_id %}" class="d-inline-block px-2">{{ driver.truck_number }}</a>
+              {% else %}
+                <b>Truck:</b> &nbsp; N/A
+              {% endif %}
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div class="d-block w-100">
+              <b>Description:</b> &nbsp; {{ driver.info|linebreaks }}
             </div>
 
             <div class="d-block w-100 py-3">
-              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="driver_update_info_btn">Update info</button>
-              <button type="button" class="btn btn-danger d-inline-block m-2" id="driver_delete_btn">Delete</button>
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" data-bs-toggle="offcanvas" data-bs-target="#update_driver_canvas">Update</button>
+              <button type="button" class="btn btn-danger d-inline-block m-2" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal">Delete</button>
             </div>
           </div>
         </div>
         <div id="driver_trips" class="tab_div">
           <h5>Driver's trip history..</h5><hr class="my-1" />
           <div class="d-block w-100 float-start my-1 table-responsive">
-            <table class="table text-ttxt table-striped" id="driver_trips_table">
+            <table class="table text-ttxt text-center align-middle table-striped" id="driver_trips_table">
               <thead>
-                <tr class="bg-bblight text-white text-center">
-                  <th class="text-center">S/n</th>
-                  <th class="text-center">StartDate</th>
-                  <th class="text-center">Origin</th>
-                  <th class="text-center">Destination</th>
-                  <th class="text-center">Status</th>
-                  <th class="text-center">Action</th>
+                <tr class="bg-bblight text-white">
+                  <th>S/n</th>
+                  <th>StartDate</th>
+                  <th>Origin</th>
+                  <th>Destination</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody class="text-ttxt">
                 <tr>
-                  <td class="align-middle">1</td>
-                  <td class="align-middle">24-Jan-2024</td>
-                  <td class="align-middle">Pwani</td>
-                  <td class="align-middle">Entebe-Uganda</td>
-                  <td class="align-middle">Returning</td>
-                  <td class="align-middle">
+                  <td>1</td>
+                  <td>24-Jan-2024</td>
+                  <td>Pwani</td>
+                  <td>Entebe-Uganda</td>
+                  <td>Returning</td>
+                  <td>
                     <a class="btn btn-bblight btn-sm text-white" href="#">View</a>
                   </td>
                 </tr>
@@ -81,39 +94,81 @@
         </div>
       </div>
     </div>
+
+    <div class="offcanvas offcanvas-start" id="update_driver_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h5 class="offcanvas-title text-white">Update driver info..</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start" id="update_driver_form" action="{% url 'driver_operations' %}" autocomplete="off">
+          <div class="formsms w-100 float-start text-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="drv_fullname" value="{{ driver.fullname }}" name="fullname" placeholder="p" required />
+            <label for="drv_fullname" class="form-label text-ttxt fs-6">Fullname</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="drv_license" value="{{ driver.license|remove_space }}" name="licenseNum" placeholder="p" required />
+            <label for="drv_license" class="form-label text-ttxt fs-6">License number</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="drv_phone" value="{{ driver.phone|remove_space }}" name="phone" placeholder="p" required />
+            <label for="drv_phone" class="form-label text-ttxt fs-6">Phone number</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt fs-6" id="drv_describe" placeholder="d" style="min-height:100px;" name="describe">{{ driver.info|safe }}</textarea>
+            <label for="drv_describe" class="form-label text-ttxt fs-6">Description (optional)</label>
+          </div>
+          <input type="hidden" value="{{ driver.id }}" name="driver_id" id="driver_update_id" />
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" id="drv_cancel_btn" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="drv_submit_btn">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal fade" id="confirm_delete_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h5 class="modal-title text-white">Delete driver..</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="formsms d-block float-start w-100 text-start"></div>
+            <div class="form-floating d-block w-100 float-start text-ttxt fs-6 py-3 my-1">
+              You're about to delete <strong>{{ driver.fullname }}</strong> from the system.<br /><br />After confirmation, he/she won't appear in any new operations of the system.<br />Are you sure you want to continue?
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="cancel_delete_btn"><i class="fas fa-times-circle"></i> No</button>
+            <button type="button" class="btn btn-danger" id="confirm_delete_btn"><i class="fas fa-check-circle"></i> Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   {% else %}
     <div class="searchdiv input-group w-100 float-start">
-      <input type="text" class="form-control text-ttxt fs-5" id="drivers_search" placeholder="Search.." autocomplete="off" />
-      <button type="button" class="btn btn-bblue text-white ms-1" id="drivers_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+      <input type="text" class="form-control text-ttxt fs-6" id="drivers_search" placeholder="Search.." autocomplete="off" />
+      <button type="button" class="btn btn-bblight text-white ms-1" id="drivers_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
       <button class="btn btn-success text-white ms-1" type="button" title="Add new driver" data-bs-toggle="offcanvas" data-bs-target="#new_driver_canvas"><i class="fas fa-plus-circle"></i></button>
     </div>
 
     <div class="d-block w-100 float-start my-2 table-responsive">
-      <table class="table text-ttxt table-striped" id="drivers_table">
+      <table class="table text-ttxt text-center align-middle text-nowrap table-striped" id="drivers_table">
         <thead>
-          <tr class="bg-bblight text-white text-center">
-            <th class="text-center">S/n</th>
-            <th class="text-center">RecordDate</th>
-            <th class="text-center">Fullname</th>
-            <th class="text-center">License</th>
-            <th class="text-center">Contact</th>
-            <th class="text-center">Truck</th>
-            <th class="text-center">Action</th>
+          <tr class="bg-bblight text-white">
+            <th>S/n</th>
+            <th>RecordDate</th>
+            <th>Fullname</th>
+            <th>License</th>
+            <th>Contact</th>
+            <th>Truck/Trailer</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody class="text-ttxt">
-          <tr>
-            <td class="align-middle">1</td>
-            <td class="align-middle">08-Mar-2024</td>
-            <td class="align-middle">Masanja Jonathan Matabuduka</td>
-            <td class="align-middle">4002439519</td>
-            <td class="align-middle">0757389540</td>
-            <td class="align-middle">T579EHY/T319DTZ</td>
-            <td class="align-middle">
-              <a class="btn btn-bblue btn-sm" href="{% url 'driver_details' 5 %}">View</a>
-            </td>
-          </tr>
-        </tbody>
       </table>
     </div>
 
@@ -123,22 +178,22 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
-        <form class="d-block w-100 float-start" id="adnew_driver_form" action="{% url 'driver_actions' %}" autocomplete="off">
+        <form class="d-block w-100 float-start" id="adnew_driver_form" action="{% url 'driver_operations' %}" autocomplete="off">
           <div class="formsms w-100 float-start text-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="drv_fullname" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="drv_fullname" name="fullname" placeholder="p" required />
             <label for="drv_fullname" class="form-label text-ttxt fs-6">Fullname</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="drv_license" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="drv_license" name="licenseNum" placeholder="p" required />
             <label for="drv_license" class="form-label text-ttxt fs-6">License number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="drv_phone" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="drv_phone" name="phone" placeholder="p" required />
             <label for="drv_phone" class="form-label text-ttxt fs-6">Phone number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <textarea class="form-control text-ttxt fs-6" id="drv_describe" placeholder="d" style="min-height:100px;"></textarea>
+            <textarea class="form-control text-ttxt fs-6" id="drv_describe" placeholder="d" style="min-height:100px;" name="describe"></textarea>
             <label for="drv_describe" class="form-label text-ttxt fs-6">Description (optional)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
@@ -148,6 +203,34 @@
         </form>
       </div>
     </div>
+
+    <div class="modal fade" id="date_filter_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h5 class="modal-title text-white">Select range of dates..</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt1" id="min_date" placeholder="d" />
+              <label for="min_date" class="text-ttxt1">Minimum date</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt1" id="max_date" placeholder="d" />
+              <label for="max_date" class="text-ttxt1">Maximum date</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-long-arrow-left"></i></button>
+            <button type="button" class="btn btn-bblue text-white" id="date_clear"><i class="fas fa-refresh"></i></button>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="date_filter_btn"><i class="fas fa-check-circle"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <input type="hidden" id="driver_url" value="{% url 'drivers' %}" />
   {% endif %}
 {% endblock %}
 {% block scripts %}

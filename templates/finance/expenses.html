@@ -133,7 +133,7 @@
     <div class="exp_info">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" data-bs-toggle="tab" href="#exp_ops_div">Expenses</a>
+          <a class="nav-link active" data-bs-toggle="tab" href="#maintenance_div">Maintenance</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#exp_allow_div">Allowances</a>
@@ -150,23 +150,23 @@
       </ul>
 
       <div class="tab_container">
-        {% comment %}expenses{% endcomment %}
-        <div id="exp_ops_div" class="tab_div">
+        {% comment %}mainetance{% endcomment %}
+        <div id="maintenance_div" class="tab_div">
           <div class="searchdiv input-group w-100 float-start">
-            <input type="text" class="form-control text-ttxt fs-5" id="exp_ops_search" placeholder="Search.." autocomplete="off" />
-            <button type="button" class="btn btn-bblue text-white ms-1" id="exp_ops_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
-            <button class="btn btn-success text-white ms-1" type="button" title="Add new ops expense" data-bs-toggle="offcanvas" data-bs-target="#new_ops_expense_canvas"><i class="fas fa-plus-circle"></i></button>
+            <input type="text" class="form-control text-ttxt fs-6" id="maintenance_search" placeholder="Search.." autocomplete="off" />
+            <button type="button" class="btn btn-bblue text-white ms-1" id="maintenance_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
+            <button class="btn btn-success text-white ms-1" type="button" title="Add new ops expense" data-bs-toggle="offcanvas" data-bs-target="#new_maintenance_canvas"><i class="fas fa-plus-circle"></i></button>
           </div>
 
           <div class="d-block w-100 float-start my-2 table-responsive">
-            <table class="table text-ttxt text-center align-middle table-striped" id="ops_expenses_table">
+            <table class="table text-ttxt text-center align-middle table-striped" id="maintenance_expenses_table">
               <thead>
                 <tr class="bg-bblight text-white">
                   <th>S/n</th>
-                  <th>ExpenseDate</th>
+                  <th>Date</th>
                   <th>TruckTrailer</th>
                   <th>BatchNo</th>
-                  <th>ExpenseInfo</th>
+                  <th>Details</th>
                   <th>Amount(TZS)</th>
                   <th>SendingFees(TZS)</th>
                   <th>WithdrawFees(TZS)</th>
@@ -175,13 +175,13 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody class="text-ttxt text-center align-middle">
+              <tbody>
                 <tr>
                   <td>1</td>
                   <td>02-Mar-2024</td>
-                  <td class="text-start">T956DHY/T748EKR</td>
-                  <td class="text-start">B. 1.05.2024</td>
-                  <td class="text-start">Truck/Trailer: Maintenance</td>
+                  <td>T956DHY/T748EKR</td>
+                  <td class="text-start">Batch 4</td>
+                  <td class="text-start">Random maintenance type</td>
                   <td class="text-end pe-2">100,000.00</td>
                   <td class="text-end pe-2">1,440.00</td>
                   <td class="text-end pe-2">3,985.00</td>
@@ -195,8 +195,8 @@
                   <td>2</td>
                   <td>02-Mar-2024</td>
                   <td class="text-start">T956DHY</td>
-                  <td class="text-start">B. 1.05.2024</td>
-                  <td class="text-start">Truck: Maintenance</td>
+                  <td class="text-start">Batch 4</td>
+                  <td class="text-start">Maintenance type</td>
                   <td class="text-end pe-2">100,000.00</td>
                   <td class="text-end pe-2">1,440.00</td>
                   <td class="text-end pe-2">3,985.00</td>
@@ -210,8 +210,8 @@
                   <td>3</td>
                   <td>02-Mar-2024</td>
                   <td class="text-start">T956DHY</td>
-                  <td class="text-start">B. 1.05.2024</td>
-                  <td class="text-start">Trailer: Maintenance</td>
+                  <td class="text-start">Batch 4</td>
+                  <td class="text-start">Pancha</td>
                   <td class="text-end pe-2">100,000.00</td>
                   <td class="text-end pe-2">1,440.00</td>
                   <td class="text-end pe-2">3,985.00</td>
@@ -225,8 +225,8 @@
                   <td>4</td>
                   <td>02-Mar-2024</td>
                   <td class="text-start">T956DHY/T748EKR</td>
-                  <td class="text-start">B. 1.05.2024</td>
-                  <td class="text-start">Truck/Trailer: Maintenance</td>
+                  <td class="text-start">Batch 4</td>
+                  <td class="text-start">Kubadili oil</td>
                   <td class="text-end pe-2">100,000.00</td>
                   <td class="text-end pe-2">1,440.00</td>
                   <td class="text-end pe-2">3,985.00</td>
@@ -240,8 +240,8 @@
                   <td>6</td>
                   <td>02-Mar-2024</td>
                   <td class="text-start">T956DHY/T748EKR</td>
-                  <td class="text-start">B. 1.05.2024</td>
-                  <td class="text-start">Truck/Trailer: Maintenance</td>
+                  <td class="text-start">Batch 4</td>
+                  <td class="text-start">Maintenance type</td>
                   <td class="text-end pe-2">100,000.00</td>
                   <td class="text-end pe-2">1,440.00</td>
                   <td class="text-end pe-2">3,985.00</td>
@@ -258,7 +258,7 @@
         {% comment %}allowances{% endcomment %}
         <div id="exp_allow_div" class="tab_div">
           <div class="searchdiv input-group w-100 float-start">
-            <input type="text" class="form-control text-ttxt fs-5" id="exp_all_search" placeholder="Search.." autocomplete="off" />
+            <input type="text" class="form-control text-ttxt fs-6" id="exp_all_search" placeholder="Search.." autocomplete="off" />
             <button type="button" class="btn btn-bblue text-white ms-1" id="exp_all_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
             <button class="btn btn-success text-white ms-1" type="button" title="Add new allowance" data-bs-toggle="offcanvas" data-bs-target="#new_allowance_canvas"><i class="fas fa-plus-circle"></i></button>
           </div>
@@ -268,11 +268,12 @@
               <thead>
                 <tr class="bg-bblight text-white">
                   <th>S/n</th>
-                  <th>AllowanceDate</th>
+                  <th>Date</th>
                   <th>DriverName</th>
                   <th>TruckTrailer</th>
                   <th>BatchNo</th>
                   <th>Type</th>
+                  <th>Details</th>
                   <th>Amount(TZS)</th>
                   <th>SendingFees(TZS)</th>
                   <th>WithdrawFees(TZS)</th>
@@ -286,8 +287,9 @@
                   <td>13-Mar-2024</td>
                   <td class="text-start">Deogratias Matemu</td>
                   <td class="text-start">T489BGT/T984EST</td>
-                  <td class="text-start">B. 1.04.2024</td>
+                  <td class="text-start">Batch 4.2024</td>
                   <td class="text-start">Going</td>
+                  <td class="text-start">Meals</td>
                   <td class="text-end pe-2">100,000.00</td>
                   <td class="text-end pe-2">1,440.50</td>
                   <td class="text-end pe-2">4,500.00</td>
@@ -303,7 +305,7 @@
         {% comment %}fuel expenses{% endcomment %}
         <div id="exp_fuel_div" class="tab_div">
           <div class="searchdiv input-group w-100 float-start">
-            <input type="text" class="form-control text-ttxt fs-5" id="exp_fuel_search" placeholder="Search.." autocomplete="off" />
+            <input type="text" class="form-control text-ttxt fs-6" id="exp_fuel_search" placeholder="Search.." autocomplete="off" />
             <button type="button" class="btn btn-bblue text-white ms-1" id="exp_fuel_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
             <button class="btn btn-success text-white ms-1" type="button" title="Add new fuel" data-bs-toggle="offcanvas" data-bs-target="#new_fuel_canvas"><i class="fas fa-plus-circle"></i></button>
           </div>
@@ -352,7 +354,7 @@
         {% comment %}permits{% endcomment %}
         <div id="exp_permit_div" class="tab_div">
           <div class="searchdiv input-group w-100 float-start">
-            <input type="text" class="form-control text-ttxt fs-5" id="exp_permit_search" placeholder="Search.." autocomplete="off" />
+            <input type="text" class="form-control text-ttxt fs-6" id="exp_permit_search" placeholder="Search.." autocomplete="off" />
             <button type="button" class="btn btn-bblue text-white ms-1" id="exp_permit_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
             <button class="btn btn-success text-white ms-1" type="button" title="Add new permit" data-bs-toggle="offcanvas" data-bs-target="#new_permit_canvas"><i class="fas fa-plus-circle"></i></button>
           </div>
@@ -401,7 +403,7 @@
         {% comment %}other expenses{% endcomment %}
         <div id="exp_others_div" class="tab_div">
           <div class="searchdiv input-group w-100 float-start">
-            <input type="text" class="form-control text-ttxt fs-5" id="other_exp_search" placeholder="Search.." autocomplete="off" />
+            <input type="text" class="form-control text-ttxt fs-6" id="other_exp_search" placeholder="Search.." autocomplete="off" />
             <button type="button" class="btn btn-bblue text-white ms-1" id="other_exp_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
             <button class="btn btn-success text-white ms-1" type="button" title="Add new expense" data-bs-toggle="offcanvas" data-bs-target="#new_otherexpense_canvas"><i class="fas fa-plus-circle"></i></button>
           </div>
@@ -443,9 +445,9 @@
     </div>
 
     {% comment %}canvas to add new ops expense{% endcomment %}
-    <div class="offcanvas offcanvas-start" id="new_ops_expense_canvas">
+    <div class="offcanvas offcanvas-start" id="new_maintenance_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h5 class="offcanvas-title text-white">Add new expense..</h5>
+        <h5 class="offcanvas-title text-white">Add new maintenance..</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
@@ -453,7 +455,7 @@
           <div class="formsms w-100 float-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="date" class="form-control text-ttxt fs-6" id="exp_date" value="{% now 'Y-m-d' %}" placeholder="p" required />
-            <label for="exp_date" class="text-ttxt fs-6">Expense date</label>
+            <label for="exp_date" class="text-ttxt fs-6">Maintenance date</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <select class="form-select text-ttxt" id="exp_target" required>
@@ -473,7 +475,7 @@
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="text" class="form-control text-ttxt fs-6" id="exp_describe" placeholder="p" required />
-            <label for="exp_describe" class="text-ttxt fs-6">Expense brief description</label>
+            <label for="exp_describe" class="text-ttxt fs-6">Maintenance type</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
             <input type="number" min="1" class="form-control text-ttxt fs-6" id="exp_amount_tzs" placeholder="p" required />

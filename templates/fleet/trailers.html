@@ -1,4 +1,5 @@
 {% extends 'master.html' %}
+{% load tmp_filters %}
 {% load static %}
 {% block title %}
   Trailers | Multiplier ltd
@@ -32,34 +33,39 @@
           <h5>Trailer information..</h5><hr class="my-1" />
           <div class="info">
             <div>
-              <b>Current status:</b> &nbsp; Trip (returning)
+              <b>Reg. date:</b> &nbsp; {{ trailer.regdate }}
             </div>
             <div>
-              <b>Add date:</b> &nbsp; 19-Feb-2024 16:52:46
+              <b>Registered by:</b> &nbsp; {{ trailer.regby }}
             </div>
             <div>
-              <b>Added by:</b> &nbsp; Jonathan Masawe
+              <b>Last edited on:</b> &nbsp; {{ trailer.lastEdit }}
             </div>
             <div>
-              <b>Last edited by:</b> &nbsp; Musa Luhanga (03-Mar-2024)
+              <b>Last edited by:</b> &nbsp; {{ trailer.editby }}
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div>
+              <b>Reg. Number:</b> &nbsp; {{ trailer.reg }}
             </div>
             <div>
-              <b>Reg. Number:</b> &nbsp; T 684 BTC
+              <b>Type:</b> &nbsp; {{ trailer.type }}
             </div>
             <div>
-              <b>Type:</b> &nbsp; Scania
+              {% if trailer.truck_id %}
+                <b>Truck:</b> &nbsp; <a href="{% url 'truck_details' trailer.truck_id %}" class="d-inline-block px-2">{{ trailer.truck_number }}</a>
+              {% else %}
+                <b>Truck:</b> &nbsp; N/A
+              {% endif %}
             </div>
-            <div>
-              <b>Model:</b> &nbsp; Scania 574
-            </div>
-            <div>
-              <b>Truck:</b> &nbsp; <a href="{% url 'truck_details' 5 %}" class="d-inline-block px-2">Scania - T 652 DKY</a>
+            <hr class="d-block w-100 my-3" />
+            <div class="d-block w-100">
+              <b>Description:</b> &nbsp; {{ trailer.info|linebreaks }}
             </div>
 
             <div class="d-block w-100 py-3">
-              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="trailer_update_info_btn">Update info</button>
-              <button type="button" class="btn btn-warning d-inline-block m-2" id="trailer_hide_btn">Block</button>
-              <button type="button" class="btn btn-danger d-inline-block m-2" id="trailer_delete_btn">Delete</button>
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" data-bs-toggle="offcanvas" data-bs-target="#update_trailer_canvas">Update</button>
+              <button type="button" class="btn btn-danger d-inline-block m-2" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal">Delete</button>
             </div>
           </div>
         </div>
@@ -92,64 +98,69 @@
             </table>
           </div>
         </div>
-        {% comment %} <div id="trailer_permits" class="tab_div">
-          <h5>Trailer's permits list..</h5><hr class="my-1" />
-          <div class="d-block w-100 float-start my-1 table-responsive">
-            <table class="table text-ttxt table-striped" id="trailer_permits_table">
-              <thead>
-                <tr class="bg-bblight text-white text-center">
-                  <th>S/n</th>
-                  <th>Type</th>
-                  <th>Cost</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody class="text-ttxt">
-                <tr>
-                  <td>1</td>
-                  <td>Border crossing</td>
-                  <td>185,000 TZS</td>
-                  <td>
-                    <a class="btn btn-bblight text-white" href="#">View</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div id="trailer_maintenance" class="tab_div">
-          <h5>Trailer's maintenance history..</h5><hr class="my-1" />
-          <div class="d-block w-100 float-start my-1 table-responsive">
-            <table class="table text-ttxt table-striped" id="trailer_maintenance_table">
-              <thead>
-                <tr class="bg-bblight text-white text-center">
-                  <th>S/n</th>
-                  <th>Dates</th>
-                  <th>Cost</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody class="text-ttxt">
-                <tr>
-                  <td>1</td>
-                  <td>24-Jan-2024</td>
-                  <td>365,000 TZS</td>
-                  <td>
-                    <a class="btn btn-bblight text-white" href="#">View</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div> {% endcomment %}
         <div id="trailer_gps" class="tab_div">
           <h5>Trailer's gps tracker..</h5><hr class="my-1" />
         </div>
       </div>
     </div>
+
+    <div class="offcanvas offcanvas-start" id="update_trailer_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h5 class="offcanvas-title text-white">Update trailer information..</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start" id="update_trailer_form" action="{% url 'trailer_operations' %}" autocomplete="off">
+          <input type="hidden" value="{{ trailer.type }}" id="type_trl_val" />
+          <div class="formsms w-100 float-start text-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trl_regnumber" placeholder="p" value="{{ trailer.reg }}" name="regnumber" required />
+            <label for="trl_regnumber" class="text-ttxt fs-6">Registration number</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt fs-6" id="trl_type" name="trailerType" required>
+              <option value="">--select--</option>
+              <option value="Super single">Super single</option>
+              <option value="Double tyre">Double tyre</option>
+            </select>
+            <label class="form-label text-ttxt fs-6" for="trl_type">Select trailer type</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt fs-6" id="trl_describe" placeholder="d" style="min-height:100px;" name="describe">{{ trailer.info|safe }}</textarea>
+            <label for="trl_describe" class="form-label text-ttxt fs-6">Description (optional)</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas" id="trl_cancel_btn">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="trl_submit_btn">Save</button>
+          </div>
+          <input type="hidden" value="{{ trailer.id }}" name="trailer_id" id="trailer_update_id" />
+        </form>
+      </div>
+    </div>
+
+    <div class="modal fade" id="confirm_delete_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h5 class="modal-title text-white">Delete trailer..</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="formsms d-block float-start w-100 text-start"></div>
+            <div class="form-floating d-block w-100 float-start text-ttxt fs-6 py-3 my-1">
+              You're about to delete <strong>{{ trailer.reg }}</strong> (trailer) from the system.<br />After confirmation, it won't appear in any new operations of the system.<br /><br />Are you sure you want to continue?
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="cancel_delete_btn"><i class="fas fa-times-circle"></i> No</button>
+            <button type="button" class="btn btn-danger" id="confirm_delete_btn"><i class="fas fa-check-circle"></i> Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   {% else %}
     <div class="searchdiv input-group w-100 float-start">
-      <input type="text" class="form-control text-ttxt fs-5" id="trailers_search" placeholder="Search.." autocomplete="off" />
+      <input type="text" class="form-control text-ttxt fs-6" id="trailers_search" placeholder="Search.." autocomplete="off" />
       <button type="button" class="btn btn-bblue text-white ms-1" id="trailers_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
       <button class="btn btn-success text-white ms-1" type="button" title="Add new trailer" data-bs-toggle="offcanvas" data-bs-target="#new_trailer_canvas"><i class="fas fa-plus-circle"></i></button>
     </div>
@@ -159,25 +170,14 @@
         <thead>
           <tr class="bg-bblight text-white">
             <th>S/n</th>
+            <th>Regdate</th>
             <th>Number</th>
-            <th>Model</th>
+            <th>Type</th>
             <th>Truck</th>
-            <th>Maintenance</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>T 394 EKD</td>
-            <td>S045-TY08-5879</td>
-            <td>T 482 CPS</td>
-            <td>13-Feb-2024</td>
-            <td>
-              <a class="btn btn-bblue" href="{% url 'trailer_details' 5 %}">View</a>
-            </td>
-          </tr>
-        </tbody>
       </table>
     </div>
 
@@ -187,14 +187,14 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
-        <form class="d-block w-100 float-start" id="new_trailer_form" action="{% url 'trailer_actions' %}" autocomplete="off">
+        <form class="d-block w-100 float-start" id="new_trailer_form" action="{% url 'trailer_operations' %}" autocomplete="off">
           <div class="formsms w-100 float-start text-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trl_regnumber" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" name="regnumber" id="trl_regnumber" placeholder="p" required />
             <label for="trl_regnumber" class="text-ttxt fs-6">Registration number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt fs-6" id="trl_type" required>
+            <select class="form-select text-ttxt fs-6" name="trailerType" id="trl_type" required>
               <option value="">--select--</option>
               <option value="Super single">Super single</option>
               <option value="Double tyre">Double tyre</option>
@@ -202,7 +202,7 @@
             <label class="form-label text-ttxt fs-6" for="trl_type">Select trailer type</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <textarea class="form-control text-ttxt fs-6" id="trl_describe" placeholder="d" style="min-height:100px;"></textarea>
+            <textarea class="form-control text-ttxt fs-6" id="trl_describe" placeholder="d" style="min-height:100px;" name="describe"></textarea>
             <label for="trl_describe" class="form-label text-ttxt fs-6">Description (optional)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
@@ -212,6 +212,34 @@
         </form>
       </div>
     </div>
+
+    <div class="modal fade" id="date_filter_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h5 class="modal-title text-white">Select range of dates..</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt1" id="min_date" placeholder="d" />
+              <label for="min_date" class="text-ttxt1">Minimum date</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt1" id="max_date" placeholder="d" />
+              <label for="max_date" class="text-ttxt1">Maximum date</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-long-arrow-left"></i></button>
+            <button type="button" class="btn btn-bblue text-white" id="date_clear"><i class="fas fa-refresh"></i></button>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="date_filter_btn"><i class="fas fa-check-circle"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <input type="hidden" id="trailer_url" value="{% url 'trailers' %}" />
   {% endif %}
 {% endblock %}
 {% block scripts %}

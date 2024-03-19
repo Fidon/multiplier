@@ -1,4 +1,5 @@
 {% extends 'master.html' %}
+{% load tmp_filters %}
 {% load static %}
 {% block title %}
   Trucks | Multiplier ltd
@@ -32,40 +33,53 @@
           <h5>Truck information..</h5><hr class="my-1" />
           <div class="info">
             <div>
-              <b>Current status:</b> &nbsp; Trip (returning)
+              <b>Reg. date:</b> &nbsp; {{ truck.regdate }}
             </div>
             <div>
-              <b>Add date:</b> &nbsp; 19-Feb-2024 16:52:46
+              <b>Registered by:</b> &nbsp; {{ truck.regby }}
             </div>
             <div>
-              <b>Added by:</b> &nbsp; Jonathan Masawe
+              <b>Last edited on:</b> &nbsp; {{ truck.lastEdit }}
             </div>
             <div>
-              <b>Last edited by:</b> &nbsp; Musa Luhanga (03-Mar-2024)
+              <b>Last edited by:</b> &nbsp; {{ truck.editby }}
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div>
+              <b>Reg. Number:</b> &nbsp; {{ truck.reg }}
             </div>
             <div>
-              <b>Reg. Number:</b> &nbsp; T 684 BTC
+              <b>Truck type:</b> &nbsp; {{ truck.type }}
             </div>
             <div>
-              <b>Type:</b> &nbsp; Scania
+              <b>Truck Model:</b> &nbsp; {{ truck.model }}
             </div>
             <div>
-              <b>Model:</b> &nbsp; Scania 574
+              <b>Horse type:</b> &nbsp; {{ truck.horse }}
+            </div>
+            <hr class="d-block w-100 my-3" />
+            <div>
+              {% if truck.trailer_id %}
+                <b>Trailer:</b> &nbsp; <a href="{% url 'trailer_details' truck.trailer_id %}" class="d-inline-block px-2">{{ truck.trailer_number }}</a>
+              {% else %}
+                <b>Trailer:</b> &nbsp; N/A
+              {% endif %}
             </div>
             <div>
-              <b>Trailer:</b> &nbsp; <a href="{% url 'trailer_details' 5 %}" class="d-inline-block px-2">Scania - T 652 DKY</a>
+              {% if truck.driver_id %}
+                <b>Driver:</b> &nbsp; <a href="{% url 'driver_details' truck.driver_id %}" class="d-inline-block px-2">{{ truck.driver_name }}</a>
+              {% else %}
+                <b>Driver:</b> &nbsp; N/A
+              {% endif %}
             </div>
-            <div>
-              <b>Driver:</b> &nbsp; <a href="{% url 'trailer_details' 5 %}" class="d-inline-block px-2">Hassan Msangi</a>
-            </div>
-            <div>
-              <b>Contact:</b> &nbsp; 0757 957 579
+            <hr class="d-block w-100 my-3" />
+            <div class="d-block w-100">
+              <b>Description:</b> &nbsp; {{ truck.info|linebreaks }}
             </div>
 
             <div class="d-block w-100 py-3">
-              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="truck_update_info_btn">Update info</button>
-              <button type="button" class="btn btn-warning d-inline-block m-2" id="truck_hide_btn">Block</button>
-              <button type="button" class="btn btn-danger d-inline-block m-2" id="truck_delete_btn">Delete</button>
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" data-bs-toggle="offcanvas" data-bs-target="#update_truck_canvas">Update</button>
+              <button type="button" class="btn btn-danger d-inline-block m-2" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal">Delete</button>
             </div>
           </div>
         </div>
@@ -75,22 +89,22 @@
             <table class="table text-ttxt table-striped" id="truck_trips_table">
               <thead>
                 <tr class="bg-bblight text-white text-center">
-                  <th class="text-center">S/n</th>
-                  <th class="text-center">StartDate</th>
-                  <th class="text-center">Origin</th>
-                  <th class="text-center">Destination</th>
-                  <th class="text-center">Status</th>
-                  <th class="text-center">Action</th>
+                  <th>S/n</th>
+                  <th>StartDate</th>
+                  <th>Origin</th>
+                  <th>Destination</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody class="text-ttxt">
                 <tr>
-                  <td class="align-middle">1</td>
-                  <td class="align-middle">24-Jan-2024</td>
-                  <td class="align-middle">Pwani</td>
-                  <td class="align-middle">Entebe-Uganda</td>
-                  <td class="align-middle">Returning</td>
-                  <td class="align-middle">
+                  <td>1</td>
+                  <td>24-Jan-2024</td>
+                  <td>Pwani</td>
+                  <td>Entebe-Uganda</td>
+                  <td>Returning</td>
+                  <td>
                     <a class="btn btn-bblight text-white" href="#">View</a>
                   </td>
                 </tr>
@@ -98,96 +112,118 @@
             </table>
           </div>
         </div>
-        {% comment %} <div id="truck_permits" class="tab_div">
-          <h5 class="position-relative">Truck's permits list..<span class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add_permit_modal"><i class="fas fa-plus-circle"></i> Add new</span></h5><hr class="my-1" />
-          <div class="d-block w-100 float-start my-1 table-responsive">
-            <table class="table text-ttxt table-striped" id="truck_permits_table">
-              <thead>
-                <tr class="bg-bblight text-white text-center">
-                  <th class="text-center">S/n</th>
-                  <th class="text-center">Type</th>
-                  <th class="text-center">Cost</th>
-                  <th class="text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody class="text-ttxt">
-                <tr>
-                  <td class="align-middle">1</td>
-                  <td class="align-middle">Border crossing</td>
-                  <td class="align-middle">185,000 TZS</td>
-                  <td class="align-middle">
-                    <a class="btn btn-bblight text-white" href="#">View</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div id="truck_maintenance" class="tab_div">
-          <h5>Truck's maintenance history..</h5><hr class="my-1" />
-          <div class="d-block w-100 float-start my-1 table-responsive">
-            <table class="table text-ttxt table-striped" id="truck_maintenance_table">
-              <thead>
-                <tr class="bg-bblight text-white text-center">
-                  <th class="text-center">S/n</th>
-                  <th class="text-center">Dates</th>
-                  <th class="text-center">Cost</th>
-                  <th class="text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody class="text-ttxt">
-                <tr>
-                  <td class="align-middle">1</td>
-                  <td class="align-middle">24-Jan-2024</td>
-                  <td class="align-middle">365,000 TZS</td>
-                  <td class="align-middle">
-                    <a class="btn btn-bblight text-white" href="#">View</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div> {% endcomment %}
         <div id="truck_gps" class="tab_div">
           <h5>Truck's gps tracker..</h5><hr class="my-1" />
         </div>
       </div>
     </div>
+
+    <div class="offcanvas offcanvas-start" id="update_truck_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h5 class="offcanvas-title text-white">Update truck info..</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start" action="{% url 'truck_operations' %}" id="update_truck_form" autocomplete="off">
+          <div class="formsms w-100 float-start text-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trk_regnumber" name="regnumber" placeholder="p" value="{{ truck.reg }}" required />
+            <label for="trk_regnumber" class="form-label text-ttxt fs-6">Registration number</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trk_type" name="truckType" placeholder="p" value="{{ truck.type }}" required />
+            <label for="trk_type" class="form-label text-ttxt fs-6">Truck type</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt fs-6" id="trk_horse" name="horseType" required>
+              <option value="">--select--</option>
+              <option value="Terias">Terias</option>
+              <option value="Double diff">Double diff</option>
+            </select>
+            <label class="form-label text-ttxt fs-6" for="trk_horse">Select horse type</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="text" class="form-control text-ttxt fs-6" id="trk_model" name="truckModel" placeholder="p" value="{{ truck.model }}" required />
+            <label for="trk_model" class="form-label text-ttxt fs-6">Truck model</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt fs-6" id="trk_trailer" name="trailer">
+              <option value="">--N/A--</option>
+              {% for trl in trailers %}
+                <option value="{{ trl.id }}">{{ trl.regnumber }} - {{ trl.type }}</option>
+              {% endfor %}
+            </select>
+            <label class="form-label form-label text-ttxt fs-6" for="trk_trailer">Select trailer</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt fs-6" id="trk_driver" name="driver">
+              <option value="">--N/A--</option>
+              {% for drv in drivers %}
+                <option value="{{ drv.id }}">{{ drv.fullname }}</option>
+              {% endfor %}
+            </select>
+            <label class="form-label text-ttxt fs-6" for="trk_driver">Select driver</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt fs-6" id="trk_describe" placeholder="d" style="min-height:100px;" name="describe">{{ truck.info|safe }}</textarea>
+            <label for="trk_describe" class="form-label text-ttxt fs-6">Description (optional)</label>
+          </div>
+          <input type="hidden" value="{{ truck.id }}" name="truck_id" id="truck_update_id" />
+          <input type="hidden" value="{{ truck.horse }}" id="update_truck_horse" />
+          <input type="hidden" value="{{ truck.trailer_id }}" id="update_truck_trailer" />
+          <input type="hidden" value="{{ truck.driver_id }}" id="update_truck_driver" />
+
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" id="trk_cancel_btn" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="trk_submit_btn">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal fade" id="confirm_delete_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h5 class="modal-title text-white">Delete truck..</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="formsms d-block float-start w-100 text-start"></div>
+            <div class="form-floating d-block w-100 float-start text-ttxt fs-6 py-3 my-1">
+              You're about to delete <strong>{{ truck.reg }}</strong> from the system.<br /><br />After confirmation, it won't appear in any new operations of the system.<br />Are you sure you want to continue?
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="cancel_delete_btn"><i class="fas fa-times-circle"></i> No</button>
+            <button type="button" class="btn btn-danger" id="confirm_delete_btn"><i class="fas fa-check-circle"></i> Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   {% else %}
     <div class="searchdiv input-group w-100 float-start">
-      <input type="text" class="form-control text-ttxt fs-5" id="trucks_search" placeholder="Search.." autocomplete="off" />
+      <input type="text" class="form-control text-ttxt fs-6" id="trucks_search" placeholder="Search.." autocomplete="off" />
       <button type="button" class="btn btn-bblue text-white ms-1" id="trucks_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
       <button class="btn btn-success text-white ms-1" type="button" title="Add new truck" data-bs-toggle="offcanvas" data-bs-target="#new_truck_canvas"><i class="fas fa-plus-circle"></i></button>
     </div>
 
     <div class="d-block w-100 float-start my-2 table-responsive">
-      <table class="table text-ttxt table-striped" id="trucks_table">
+      <table class="table text-ttxt text-center text-nowrap align-middle table-striped" id="trucks_table">
         <thead>
-          <tr class="bg-bblight text-white text-center">
-            <th class="text-center">S/n</th>
-            <th class="text-center">Number</th>
-            <th class="text-center">Type</th>
-            <th class="text-center">Model</th>
-            <th class="text-center">Trailer</th>
-            <th class="text-center">Maintenance</th>
-            <th class="text-center">Available</th>
-            <th class="text-center">Action</th>
+          <tr class="bg-bblight text-white">
+            <th>S/n</th>
+            <th>Regdate</th>
+            <th>Number</th>
+            <th>Type</th>
+            <th>HorseType</th>
+            <th>Model</th>
+            <th>Trailer</th>
+            <th>Driver</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody class="text-ttxt">
-          <tr>
-            <td class="align-middle">1</td>
-            <td class="align-middle">T 394 EKD</td>
-            <td class="align-middle">Scania</td>
-            <td class="align-middle">S045-TY08-5879</td>
-            <td class="align-middle">T 482 CPS</td>
-            <td class="align-middle">13-Feb-2024</td>
-            <td class="align-middle">Yes</td>
-            <td class="align-middle">
-              <a class="btn btn-bblue" href="{% url 'truck_details' 5 %}">View</a>
-            </td>
-          </tr>
-        </tbody>
       </table>
     </div>
 
@@ -197,18 +233,18 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
-        <form class="d-block w-100 float-start" action="{% url 'truck_actions' %}" id="addnew_truck_form">
+        <form class="d-block w-100 float-start" action="{% url 'truck_operations' %}" id="addnew_truck_form" autocomplete="off">
           <div class="formsms w-100 float-start text-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trk_regnumber" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="trk_regnumber" name="regnumber" placeholder="p" required />
             <label for="trk_regnumber" class="form-label text-ttxt fs-6">Registration number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trk_type" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="trk_type" name="truckType" placeholder="p" required />
             <label for="trk_type" class="form-label text-ttxt fs-6">Truck type</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt fs-6" id="trk_horse" required>
+            <select class="form-select text-ttxt fs-6" id="trk_horse" name="horseType" required>
               <option value="">--select--</option>
               <option value="Terias">Terias</option>
               <option value="Double diff">Double diff</option>
@@ -216,11 +252,11 @@
             <label class="form-label text-ttxt fs-6" for="trk_horse">Select horse type</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trk_model" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="trk_model" name="truckModel" placeholder="p" required />
             <label for="trk_model" class="form-label text-ttxt fs-6">Truck model</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt fs-6" id="trk_trailer" required>
+            <select class="form-select text-ttxt fs-6" id="trk_trailer" name="trailer">
               <option value="">--select--</option>
               {% for trl in trailers %}
                 <option value="{{ trl.id }}">{{ trl.regnumber }} - {{ trl.type }}</option>
@@ -229,7 +265,7 @@
             <label class="form-label form-label text-ttxt fs-6" for="trk_trailer">Select trailer</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt fs-6" id="trk_driver" required>
+            <select class="form-select text-ttxt fs-6" id="trk_driver" name="driver">
               <option value="">--select--</option>
               {% for drv in drivers %}
                 <option value="{{ drv.id }}">{{ drv.fullname }}</option>
@@ -238,7 +274,7 @@
             <label class="form-label text-ttxt fs-6" for="trk_driver">Select driver</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <textarea class="form-control text-ttxt fs-6" id="trk_describe" placeholder="d" style="min-height:100px;"></textarea>
+            <textarea class="form-control text-ttxt fs-6" id="trk_describe" placeholder="d" style="min-height:100px;" name="describe"></textarea>
             <label for="trk_describe" class="form-label text-ttxt fs-6">Description (optional)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
@@ -248,44 +284,35 @@
         </form>
       </div>
     </div>
-  {% endif %}
 
-  <div class="modal fade" id="add_permit_modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-bblue">
-          <h3 class="modal-title text-white">Add new permit..</h3>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <form class="modal-body">
-          <div class="form-floating d-block w-100 float-start my-1">
-            <input type="date" max="{% now 'Y-m-d' %}" class="form-control text-ttxt fs-6" id="trk_permit_date" placeholder="d" />
-            <label for="trk_permit_date" class="text-ttxt fs-6">Permit date</label>
+    <div class="modal fade" id="date_filter_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h5 class="modal-title text-white">Select range of dates..</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
           </div>
-          <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trk_permit_name" placeholder="d" />
-            <label for="trk_permit_name" class="text-ttxt fs-6">Permit name</label>
+          <div class="modal-body">
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt1" id="min_date" placeholder="d" />
+              <label for="min_date" class="text-ttxt1">Minimum date</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt1" id="max_date" placeholder="d" />
+              <label for="max_date" class="text-ttxt1">Maximum date</label>
+            </div>
           </div>
-          <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trk_permit_type" placeholder="d" />
-            <label for="trk_permit_type" class="text-ttxt fs-6">Permit type</label>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-long-arrow-left"></i></button>
+            <button type="button" class="btn btn-bblue text-white" id="date_clear"><i class="fas fa-refresh"></i></button>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="date_filter_btn"><i class="fas fa-check-circle"></i></button>
           </div>
-          <div class="form-floating d-block w-100 float-start my-1">
-            <input type="number" class="form-control text-ttxt fs-6" id="trk_permit_cost" placeholder="d" />
-            <label for="trk_permit_cost" class="text-ttxt fs-6">Permit cost</label>
-          </div>
-          <div class="form-floating d-block w-100 float-start my-1">
-            <textarea class="form-control text-ttxt" id="trk_permit_description" placeholder="d" style="min-height:150px;"></textarea>
-            <label for="trk_permit_description" class="text-ttxt">Permit description (optional)</label>
-          </div>
-        </form>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-success" id="trk_submit_permit_btn" data-bs-dismiss="modal">Add</button>
         </div>
       </div>
     </div>
-  </div>
+
+    <input type="hidden" id="truck_url" value="{% url 'trucks' %}" />
+  {% endif %}
 {% endblock %}
 {% block scripts %}
   <script src="{% static 'js/fleet/trucks.js' %}"></script>

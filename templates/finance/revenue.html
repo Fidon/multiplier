@@ -128,29 +128,31 @@
     </div>
   {% else %}
     <div class="searchdiv input-group w-100 float-start">
-      <input type="text" class="form-control text-ttxt fs-5" id="revenue_search" placeholder="Search.." autocomplete="off" />
+      <input type="text" class="form-control text-ttxt fs-6" id="revenue_search" placeholder="Search.." autocomplete="off" />
       <button type="button" class="btn btn-bblue text-white ms-1" id="revenue_filter_clear" title="Clear filters"><i class="fas fa-refresh"></i></button>
       <button class="btn btn-success text-white ms-1" type="button" title="Add new revenue" data-bs-toggle="offcanvas" data-bs-target="#new_revenue_canvas"><i class="fas fa-plus-circle"></i></button>
     </div>
 
     <div class="d-block w-100 float-start my-2 table-responsive">
-      <table class="table text-ttxt table-striped" id="expenses_table">
+      <table class="table text-ttxt text-center text-nowrap align-middle table-striped" id="expenses_table">
         <thead>
-          <tr class="bg-bblight text-white text-center">
-            <th class="text-center">S/n</th>
-            <th class="text-center">RevenueDate</th>
-            <th class="text-center">RevenueInfo</th>
-            <th class="text-center">Amount(TZS)</th>
-            <th class="text-center">Balance(TZS)</th>
-            <th class="text-center">Amount(USD)</th>
-            <th class="text-center">Action</th>
+          <tr class="bg-bblight text-white">
+            <th>S/n</th>
+            <th>Date</th>
+            <th>Truck/Trailer</th>
+            <th>BatchNo</th>
+            <th>Amount(TZS)</th>
+            <th>Balance(TZS)</th>
+            <th>Amount(USD)</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody class="text-ttxt text-center align-middle">
           <tr>
             <td>1</td>
             <td>02-Mar-2024</td>
-            <td class="text-start">Batch: Alistair</td>
+            <td>T489GDY/T897KLD</td>
+            <td class="text-start">Batch 1.24</td>
             <td class="text-end pe-2">100,000.00</td>
             <td class="text-end pe-2">954,655.00</td>
             <td class="text-end pe-2">40.30</td>
@@ -164,7 +166,7 @@
 
     <div class="offcanvas offcanvas-start" id="new_revenue_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h5 class="offcanvas-title text-white">Add new revenue..</h3>
+        <h5 class="offcanvas-title text-white">Add new revenue..</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">

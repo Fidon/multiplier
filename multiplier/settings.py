@@ -116,7 +116,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'control.CustomUser'
 LOGIN_URL = '/auth/'
 LOGIN_REDIRECT_URL = '/home/'
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.ModelBackend',
-#     'mwezai_dispensary.backends.CaseInsensitiveModelBackend',
-# ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'multiplier.backends.CaseInsensitiveModelBackend',
+]

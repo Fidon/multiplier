@@ -18,7 +18,7 @@ def users_page(request, user_id=None):
     return render(request, 'control/users.html', context)
 
 @never_cache
-def users_actions(request):
+def users_operations(request):
     if request.method == 'POST':
         try:
             form = CustomUserForm(request.POST)
