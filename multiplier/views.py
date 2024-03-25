@@ -3,7 +3,7 @@ from django.views.decorators.cache import never_cache
 from django.http import JsonResponse
 from apps.control.forms import CustomAuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 
 
 @never_cache
@@ -33,3 +33,11 @@ def login_page(request):
 @never_cache
 def home_page(request):
     return render(request, 'home.html')
+
+
+@login_required
+def signout(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return JsonResponse({'message': '200'})
+    return JsonResponse({'message': '405'})

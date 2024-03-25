@@ -74,6 +74,8 @@ body * {
 
 #container .main {
     margin-top: 95px;
+    display: flex;
+    width: 100%;
 }
 
 #container .main nav {
@@ -82,6 +84,8 @@ body * {
     min-height: 100vh;
     padding: 5px;
     padding-right: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 #navbar .link,
@@ -146,10 +150,13 @@ body * {
 }
 
 #container .main .wrapper {
+    flex-grow: 1;
     float: left;
     width: calc(100% - 250px);
+    height: auto;
     min-height: 100vh;
     padding: 5px;
+    text-align: center;
 }
 #contents form input,
 #contents form select,

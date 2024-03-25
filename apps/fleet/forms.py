@@ -118,7 +118,10 @@ class TruckForm(forms.ModelForm):
     def clean_trailer(self):
         trailer = self.cleaned_data.get('trailer')
         if self.instance and self.instance.pk:
-            if Truck.objects.filter(trailer=trailer, deleted=False).exclude(pk=self.instance.pk).exists():
+            same_trailer = Truck.objects.filter(trailer=trailer, deleted=False)\
+                .exclude(pk=self.instance.pk)\
+                .exclude(trailer__isnull=True)
+            if same_trailer.exists():
                 raise forms.ValidationError("This trailer is already assigned to another truck.")
         else:
             if Truck.objects.filter(trailer=trailer, deleted=False).exists():
@@ -130,7 +133,10 @@ class TruckForm(forms.ModelForm):
     def clean_driver(self):
         driver = self.cleaned_data.get('driver')
         if self.instance and self.instance.pk:
-            if Truck.objects.filter(driver=driver, deleted=False).exclude(pk=self.instance.pk).exists():
+            same_driver = Truck.objects.filter(driver=driver, deleted=False)\
+                .exclude(pk=self.instance.pk)\
+                .exclude(driver__isnull=True)
+            if same_driver.exists():
                 raise forms.ValidationError("This driver is already assigned to another truck.")
         else:
             if Truck.objects.filter(driver=driver, deleted=False).exists():

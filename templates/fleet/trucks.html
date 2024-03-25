@@ -86,28 +86,37 @@
         <div id="truck_trips" class="tab_div">
           <h5>Truck's trip history..</h5><hr class="my-1" />
           <div class="d-block w-100 float-start my-1 table-responsive">
-            <table class="table text-ttxt table-striped" id="truck_trips_table">
+            <table class="table text-ttxt text-center align-middle table-striped" id="truck_trips_table">
               <thead>
                 <tr class="bg-bblight text-white text-center">
                   <th>S/n</th>
+                  <th>TripType</th>
                   <th>StartDate</th>
-                  <th>Origin</th>
                   <th>Destination</th>
-                  <th>Status</th>
+                  <th>LastStatus</th>
+                  <th>Completed</th>
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody class="text-ttxt">
-                <tr>
-                  <td>1</td>
-                  <td>24-Jan-2024</td>
-                  <td>Pwani</td>
-                  <td>Entebe-Uganda</td>
-                  <td>Returning</td>
-                  <td>
-                    <a class="btn btn-bblight text-white" href="#">View</a>
-                  </td>
-                </tr>
+              <tbody>
+                {% for hist in trip_history %}
+                  <tr>
+                    <td>{{ hist.count }}</td>
+                    <td class="text-start">{{ hist.triptype }}</td>
+                    <td>{{ hist.startdate }}</td>
+                    <td class="text-start">{{ hist.destination }}</td>
+                    <td class="text-start">{{ hist.laststatus }}</td>
+                    <td>{{ hist.complete }}</td>
+                    <td>
+                      <a class="btn btn-bblight btn-sm text-white" href="{{ hist.trip_url }}">View</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                {% if not trip_history %}
+                  <tr>
+                    <td colspan="7" class="py-4">No trip history found!</td>
+                  </tr>
+                {% endif %}
               </tbody>
             </table>
           </div>
@@ -150,7 +159,11 @@
             <select class="form-select text-ttxt fs-6" id="trk_trailer" name="trailer">
               <option value="">--N/A--</option>
               {% for trl in trailers %}
-                <option value="{{ trl.id }}">{{ trl.regnumber }} - {{ trl.type }}</option>
+                {% if trl.id == truck.trailer_id %}
+                  <option value="{{ trl.id }}" selected>{{ trl.regnumber }} - {{ trl.type }}</option>
+                {% else %}
+                  <option value="{{ trl.id }}">{{ trl.regnumber }} - {{ trl.type }}</option>
+                {% endif %}
               {% endfor %}
             </select>
             <label class="form-label form-label text-ttxt fs-6" for="trk_trailer">Select trailer</label>
@@ -159,7 +172,11 @@
             <select class="form-select text-ttxt fs-6" id="trk_driver" name="driver">
               <option value="">--N/A--</option>
               {% for drv in drivers %}
-                <option value="{{ drv.id }}">{{ drv.fullname }}</option>
+                {% if truck.driver_id == drv.id %}
+                  <option value="{{ drv.id }}" selected>{{ drv.fullname }}</option>
+                {% else %}
+                  <option value="{{ drv.id }}">{{ drv.fullname }}</option>
+                {% endif %}
               {% endfor %}
             </select>
             <label class="form-label text-ttxt fs-6" for="trk_driver">Select driver</label>

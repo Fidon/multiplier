@@ -13,91 +13,81 @@
   </div>
 
   <div class="d-block w-100 float-start my-2 table-responsive">
-    <table class="table text-ttxt table-striped" id="report_table">
+    <table class="table text-ttxt text-center align-middle table-striped" id="report_table">
       <thead>
-        <tr class="bg-bblight text-white text-center">
-          <th class="text-center">S/n</th>
-          <th class="text-center">DriverName</th>
-          <th class="text-center">TruckTrailer</th>
-          <th class="text-center">CurrentPosition</th>
-          <th class="text-center">Status</th>
-          <th class="text-center">LoadDate</th>
-          <th class="text-center">CurrentDate</th>
-          <th class="text-center">DaysSinceLoading</th>
-          <th class="text-center">DaysGoing</th>
-          <th class="text-center">DaysGo&Return</th>
+        <tr class="bg-bblight text-white">
+          <th>S/n</th>
+          <th>BatchNo</th>
+          <th>Type</th>
+          <th>Client</th>
+          <th>TruckTrailer</th>
+          <th>Driver</th>
+          <th>CurrentPosition</th>
+          <th>Status</th>
+          <th>LoadDate</th>
+          <th>StartDate</th>
+          <th>DaysLoading</th>
+          <th>DaysGoing</th>
+          <th>Completed</th>
+          <th>DaysGo&Return</th>
         </tr>
       </thead>
-      <tbody class="text-ttxt">
-        <tr>
-          <th class="text-center" colspan="10">Batch No 11 - Return - Alistair</th>
-        </tr>
-        <tr>
-          <td class="align-middle">1</td>
-          <td class="align-middle">Abdallah</td>
-          <td class="align-middle">T579DRT/T256EPV</td>
-          <td class="align-middle">Iringa</td>
-          <td class="align-middle">Enroute</td>
-          <td class="align-middle">03-Feb-2024</td>
-          <td class="align-middle">10-Mar-2024</td>
-          <td class="align-middle">35</td>
-          <td class="align-middle">21</td>
-          <td class="align-middle">56</td>
-        </tr>
-        <tr>
-          <td class="align-middle">2</td>
-          <td class="align-middle">Deogratias</td>
-          <td class="align-middle">T579DRT/T256EPV</td>
-          <td class="align-middle">Iringa</td>
-          <td class="align-middle">Enroute</td>
-          <td class="align-middle">03-Feb-2024</td>
-          <td class="align-middle">10-Mar-2024</td>
-          <td class="align-middle">35</td>
-          <td class="align-middle">27</td>
-          <td class="align-middle">62</td>
-        </tr>
-        <tr>
-          <th class="text-center" colspan="10">Batch No. 4-2024 - Going - Arrays ltd</th>
-        </tr>
-        <tr>
-          <td class="align-middle">1</td>
-          <td class="align-middle">Abdallah</td>
-          <td class="align-middle">T579DRT/T256EPV</td>
-          <td class="align-middle">Iringa</td>
-          <td class="align-middle">Enroute</td>
-          <td class="align-middle">03-Feb-2024</td>
-          <td class="align-middle">10-Mar-2024</td>
-          <td class="align-middle">35</td>
-          <td class="align-middle">21</td>
-          <td class="align-middle">56</td>
-        </tr>
-        <tr>
-          <td class="align-middle">2</td>
-          <td class="align-middle">Deogratias</td>
-          <td class="align-middle">T579DRT/T256EPV</td>
-          <td class="align-middle">Iringa</td>
-          <td class="align-middle">Enroute</td>
-          <td class="align-middle">03-Feb-2024</td>
-          <td class="align-middle">10-Mar-2024</td>
-          <td class="align-middle">35</td>
-          <td class="align-middle">27</td>
-          <td class="align-middle">62</td>
-        </tr>
-        <tr>
-          <td class="align-middle">3</td>
-          <td class="align-middle">Deogratias</td>
-          <td class="align-middle">T579DRT/T256EPV</td>
-          <td class="align-middle">Iringa</td>
-          <td class="align-middle">Enroute</td>
-          <td class="align-middle">03-Feb-2024</td>
-          <td class="align-middle">10-Mar-2024</td>
-          <td class="align-middle">35</td>
-          <td class="align-middle">27</td>
-          <td class="align-middle">62</td>
-        </tr>
-      </tbody>
     </table>
   </div>
+
+  <div class="modal fade" id="load_date_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-bblue">
+          <h5 class="modal-title text-white">Select range of load dates..</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" class="form-control text-ttxt1" id="min_load_date" placeholder="d" />
+            <label for="min_load_date" class="text-ttxt1">Minimum date</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" class="form-control text-ttxt1" id="max_load_date" placeholder="d" />
+            <label for="max_load_date" class="text-ttxt1">Maximum date</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-long-arrow-left"></i></button>
+          <button type="button" class="btn btn-bblue text-white" id="load_date_clear"><i class="fas fa-refresh"></i></button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="load_date_btn"><i class="fas fa-check-circle"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="start_date_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-bblue">
+          <h5 class="modal-title text-white">Select range of trip start dates..</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" class="form-control text-ttxt1" id="min_start_date" placeholder="d" />
+            <label for="min_start_date" class="text-ttxt1">Minimum date</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <input type="date" class="form-control text-ttxt1" id="max_start_date" placeholder="d" />
+            <label for="max_start_date" class="text-ttxt1">Maximum date</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-long-arrow-left"></i></button>
+          <button type="button" class="btn btn-bblue text-white" id="start_date_clear"><i class="fas fa-refresh"></i></button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="start_date_btn"><i class="fas fa-check-circle"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" id="report_url_input" value="{% url 'op_report' %}" />
 {% endblock %}
 {% block scripts %}
   <script src="{% static 'js/trips/report.js' %}"></script>

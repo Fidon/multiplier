@@ -39,7 +39,7 @@ $(function () {
 
                 var fdback = `<div class="alert alert-${response.success ? 'success' : 'danger'} alert-dismissible fade show px-2 m-0 d-block w-100"><i class='fas fa-${response.success ? 'check' : 'exclamation'}-circle'></i> ${response.sms} <button type="button" class="btn-close d-inline-block" data-bs-dismiss="alert"></button></div>`;
                 
-                $('#new_driver_canvas').animate({ scrollTop: 0 }, 'slow');
+                $('#new_driver_canvas .offcanvas-body').animate({ scrollTop: 0 }, 'slow');
                 $("#adnew_driver_form .formsms").html(fdback);
 
                 if(response.success) {
@@ -77,7 +77,7 @@ $(function () {
 
                 var fdback = `<div class="alert alert-${response.success ? 'success' : 'danger'} alert-dismissible fade show px-2 m-0 d-block w-100"><i class='fas fa-${response.success ? 'check' : 'exclamation'}-circle'></i> ${response.sms} <button type="button" class="btn-close d-inline-block" data-bs-dismiss="alert"></button></div>`;
                 
-                $('#update_driver_canvas').animate({ scrollTop: 0 }, 'slow');
+                $('#update_driver_canvas .offcanvas-body').animate({ scrollTop: 0 }, 'slow');
                 $("#update_driver_form .formsms").html(fdback);
 
                 if(response.success) {
@@ -237,12 +237,20 @@ $(function () {
                     doc.defaultStyle.fontSize = 6;
                     doc.content[1].table.widths = Array(doc.content[1].table.body[1].length + 1).join('*').split('');
 
-                    var rowCount = doc.content[1].table.body.length;
-                    for (i = 1; i < rowCount; i++) {
+                    var body = doc.content[1].table.body;
+                    for (i = 1; i < body.length; i++) {
                         doc.content[1].table.body[i][0].margin = [3, 0, 0, 0];
-                        doc.content[1].table.body[i][1].alignment = 'left';
-                        doc.content[1].table.body[i][4].alignment = 'right';
-                        doc.content[1].table.body[i][4].margin = [0, 0, 3, 0];
+                        doc.content[1].table.body[i][0].alignment = 'center';
+                        doc.content[1].table.body[i][1].alignment = 'center';
+                        doc.content[1].table.body[i][2].alignment = 'left';
+                        doc.content[1].table.body[i][3].alignment = 'left';
+                        doc.content[1].table.body[i][4].alignment = 'left';
+                        doc.content[1].table.body[i][5].alignment = 'center';
+                        doc.content[1].table.body[i][5].margin = [0, 0, 3, 0];
+
+                        for (let j = 0; j < body[i].length; j++) {
+                            body[i][j].style = "vertical-align: middle;";
+                        }
                     }
                 }
             },

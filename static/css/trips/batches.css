@@ -10,20 +10,26 @@
 #contents .dataTables_filter {
     display: none;
 }
-#contents .dt-buttons {
-    margin: 10px 0;
-}
 #contents .dataTables_length {
-    border: 1px solid rgba(105,105,105, 0.3);
-    float: right;
+    float: left;
     color: #696969;
     margin: 10px 0;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 0 5px;
+    padding-top: 5px;
     border-radius: 3px;
+    label {
+        display: inline-flex !important;
+        select.form-select {
+          margin: 0 3px;
+          border: 1px solid rgba(66,139,202, 0.8);
+          position: relative;
+          top: -4px;
+        }
+    }
 }
-#contents .dataTables_length .form-select {
-    border: 1px solid rgba(66,139,202, 0.8);
+#contents .dt-buttons {
+    float: right;
+    margin: 10px 0;
 }
 #contents .dataTables_info {
     width: auto;
@@ -41,10 +47,14 @@
     border-radius: 3px;
     width: 120px;
 }
+#date_filter_modal input {
+    border: 1px solid rgb(66,139,202,.6);
+}
 #contents .searchdiv input:focus,
 #contents .dataTables_length .form-select:focus,
 #contents table th input:focus,
-#contents table th select:focus {
+#contents table th select:focus,
+#date_filter_modal input:focus {
     border-color: #428BCA;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 7px rgba(66,139,202, 0.6);
     outline: none;
@@ -77,6 +87,12 @@
     padding: auto 5px;
     white-space: nowrap;
     text-align: center;
+}
+#contents table td.elipsis {
+    max-width: 230px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #contents .batch_info {

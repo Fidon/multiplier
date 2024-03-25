@@ -1,3 +1,5 @@
+var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 // Dropdown menu
 function dropMenu(event) {
     event.preventDefault();
@@ -20,6 +22,28 @@ function dropMenu(event) {
 $(document).on('click', '#navbar .link .header', dropMenu);
 $(document).on('click', '#menucanvas .link .header', dropMenu);
 
+
+function signout(event) {
+    event.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: '/signout/',
+        data: {},
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        headers: { 'X-CSRFToken': CSRF_TOKEN },
+        success: function(response) {
+          if (response.message === '200') {
+            window.location.href = "/auth";
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+    });
+}
+$(document).on('click', '#log_out_btn', signout);
 
 
 $("#container header .divbars span").click(function (event) { 

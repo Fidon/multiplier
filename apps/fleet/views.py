@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.urls import reverse
 from django.views.decorators.cache import never_cache
-from .models import *
-from .forms import *
+from .models import Truck_driver, Trailer, Truck
+from apps.trips.models import Trip, Trip_history
+from .forms import Truck_driverForm, TrailerForm, TruckForm
+from utils.util_functions import format_reg, format_phone, format_license
 from datetime import datetime
 from django.http import JsonResponse
 from utils.util_functions import EA_TIMEZONE
@@ -14,30 +17,18 @@ tz_tzone = EA_TIMEZONE()
 format_datetime = "%Y-%m-%d %H:%M:%S.%f"
 
 
-def format_reg(regnumber):
-    return f"{regnumber[:1]} {regnumber[1:4]} {regnumber[4:]}"
-
-def format_license(num):
-    return f"{num[:4]} {num[4:8]} {num[8:]}"
-
-def format_phone(num):
-    return f"{num[:4]}-{num[4:7]}-{num[7:]}"
-
-
 # trucks page view
 @never_cache
 def trucks_page(request, truck=None):
     def filter_truck_drivers(driver_id=None):
         if driver_id:
             return Truck_driver.objects.filter(Q(trk_driver__isnull=True) | Q(id=driver_id), deleted=False).order_by('fullname')
-        else:
-            return Truck_driver.objects.filter(trk_driver__isnull=True, deleted=False).order_by('fullname')
+        return Truck_driver.objects.filter(trk_driver__isnull=True, deleted=False).order_by('fullname')
 
     def filter_trailers(trailer_id=None):
         if trailer_id:
             return Trailer.objects.filter(Q(trk_trailer__isnull=True) | Q(id=trailer_id), deleted=False)
-        else:
-            return Trailer.objects.filter(trk_trailer__isnull=True, deleted=False)
+        return Trailer.objects.filter(trk_trailer__isnull=True, deleted=False)
     
     if request.method == 'POST' and truck is None:
         draw = int(request.POST.get('draw', 0))
@@ -165,6 +156,25 @@ def trucks_page(request, truck=None):
     
     if request.method == 'GET' and truck is not None and Truck.objects.filter(id=truck, deleted=False).exists():
         trk = Truck.objects.get(id=truck)
+        truck_trips = Trip.objects.filter(truck=trk)
+        truck_trip_history = []
+
+        for count, trip in enumerate(truck_trips, start=1):
+            last_status = "N/A"
+            if Trip_history.objects.filter(trip=trip).exists():
+                h = Trip_history.objects.filter(trip=trip).order_by('-id').first()
+                last_status = h.tripstatus
+            
+            truck_trip_history.append({
+                'count': count,
+                'triptype': trip.batch.batchType,
+                'startdate': trip.startDate.strftime('%d-%b-%Y %H:%M'),
+                'destination': trip.destination,
+                'laststatus': last_status,
+                'complete': 'Yes' if trip.completed else 'No',
+                'trip_url': reverse('trip_details', kwargs={'trip_id': trip.id}),
+            })
+
         truck_data = {
             'id': truck,
             'regdate': trk.regdate.strftime('%d-%b-%Y %H:%M:%S'),
@@ -187,6 +197,7 @@ def trucks_page(request, truck=None):
         context = {
             'truck_info': truck,
             'truck': truck_data,
+            'trip_history': truck_trip_history,
             'drivers': filter_truck_drivers(truck_data['driver_id']),
             'trailers': trailers_list
         }
@@ -209,10 +220,15 @@ def truck_operations(request):
 
         if truck_id is not None and delete_truck is not None:
             try:
-                trk = Truck.objects.get(id=truck_id)
-                trk.deleted = not trk.deleted
-                trk.save()
-                fdback = {'success': True, 'sms': 'Success'}
+                if Trip.objects.filter(truck_id=truck_id).exists():
+                    trp = Trip.objects.get(truck_id=truck_id)
+                    if trp.completed:
+                        trk = Truck.objects.get(id=truck_id)
+                        trk.deleted = not trk.deleted
+                        trk.save()
+                        fdback = {'success': True, 'sms': 'Success'}
+                    else:
+                        fdback = {'success': False, 'sms': 'This truck is still on trip.'}
             except Exception as e:
                 fdback = {'success': False, 'sms': 'Operation failed!'}
         
@@ -391,6 +407,26 @@ def trailer_page(request, trailer=None):
     
     if request.method == 'GET' and trailer is not None and Trailer.objects.filter(id=trailer, deleted=False).exists():
         trl = Trailer.objects.get(id=trailer)
+
+        trailer_trips = Trip.objects.filter(trailer=trl)
+        trailer_trip_history = []
+
+        for count, trip in enumerate(trailer_trips, start=1):
+            last_status = "N/A"
+            if Trip_history.objects.filter(trip=trip).exists():
+                h = Trip_history.objects.filter(trip=trip).order_by('-id').first()
+                last_status = h.tripstatus
+            
+            trailer_trip_history.append({
+                'count': count,
+                'triptype': trip.batch.batchType,
+                'startdate': trip.startDate.strftime('%d-%b-%Y %H:%M'),
+                'destination': trip.destination,
+                'laststatus': last_status,
+                'complete': 'Yes' if trip.completed else 'No',
+                'trip_url': reverse('trip_details', kwargs={'trip_id': trip.id}),
+            })
+
         trailer_data = {
             'id': trailer,
             'regdate': trl.regdate.strftime('%d-%b-%Y %H:%M:%S'),
@@ -409,7 +445,8 @@ def trailer_page(request, trailer=None):
                 trailer_data['truck_number'] = format_reg(truck.regnumber)
         context = {
             'trailer_info': trailer,
-            'trailer': trailer_data
+            'trailer': trailer_data,
+            'trip_history': trailer_trip_history,
         }
         return render(request, 'fleet/trailers.html', context)
     return render(request, 'fleet/trailers.html')
@@ -424,10 +461,15 @@ def trailer_operations(request):
 
         if trailer_id is not None and delete_trailer is not None:
             try:
-                trl = Trailer.objects.get(id=trailer_id)
-                trl.deleted = not trl.deleted
-                trl.save()
-                fdback = {'success': True, 'sms': 'Success'}
+                if Trip.objects.filter(truck__trailer_id=trailer_id).exists():
+                    trp = Trip.objects.get(truck__trailer_id=trailer_id)
+                    if trp.completed:
+                        trl = Trailer.objects.get(id=trailer_id)
+                        trl.deleted = not trl.deleted
+                        trl.save()
+                        fdback = {'success': True, 'sms': 'Success'}
+                    else:
+                        fdback = {'success': False, 'sms': 'This trailer is still on trip'}
             except Exception as e:
                 fdback = {'success': False, 'sms': 'Operation failed!'}
         
@@ -598,6 +640,26 @@ def driver_page(request, driver=None):
     
     if request.method == 'GET' and driver is not None and Truck_driver.objects.filter(id=driver, deleted=False).exists():
         drv = Truck_driver.objects.get(id=driver)
+
+        driver_trips = Trip.objects.filter(driver=drv)
+        driver_trip_history = []
+
+        for count, trip in enumerate(driver_trips, start=1):
+            last_status = "N/A"
+            if Trip_history.objects.filter(trip=trip).exists():
+                h = Trip_history.objects.filter(trip=trip).order_by('-id').first()
+                last_status = h.tripstatus
+            
+            driver_trip_history.append({
+                'count': count,
+                'triptype': trip.batch.batchType,
+                'startdate': trip.startDate.strftime('%d-%b-%Y %H:%M'),
+                'destination': trip.destination,
+                'laststatus': last_status,
+                'complete': 'Yes' if trip.completed else 'No',
+                'trip_url': reverse('trip_details', kwargs={'trip_id': trip.id}),
+            })
+
         driver_data = {
             'id': driver,
             'regdate': drv.regdate.strftime('%d-%b-%Y %H:%M:%S'),
@@ -620,7 +682,8 @@ def driver_page(request, driver=None):
                     driver_data['truck_number'] = f"{truck.regnumber}/{truck.trailer.regnumber}"
         context = {
             'driver_info': driver,
-            'driver': driver_data
+            'driver': driver_data,
+            'trip_history': driver_trip_history,
         }
         return render(request, 'fleet/drivers.html', context)
     return render(request, 'fleet/drivers.html')
@@ -635,13 +698,18 @@ def driver_operations(request):
 
         if driver_id is not None and delete_driver is not None:
             try:
-                driver = Truck_driver.objects.get(id=driver_id)
-                driver.deleted = not driver.deleted
-                driver.save()
-                fdback = {'success': True, 'sms': 'Success'}
+                if Trip.objects.filter(truck__driver_id=driver_id).exists():
+                    trp = Trip.objects.get(truck__driver_id=driver_id)
+                    if trp.completed:
+                        driver = Truck_driver.objects.get(id=driver_id)
+                        driver.deleted = not driver.deleted
+                        driver.save()
+                        fdback = {'success': True, 'sms': 'Success'}
+                    else:
+                        fdback = {'success': False, 'sms': 'This driver is still on trip'}
             except Exception as e:
                 fdback = {'success': False, 'sms': 'Operation failed!'}
-        
+
         elif driver_id is not None and delete_driver is None:
             try:
                 drv_instance = Truck_driver.objects.get(id=driver_id)

@@ -23,81 +23,72 @@
           <h5>Batch information..</h5><hr class="my-1" />
           <div class="info">
             <div>
-              <b>Record Date:</b> &nbsp; 12-Mar-2024 14:58:41
+              <b>Reg. date:</b> &nbsp; {{ batch.regdate }}
             </div>
             <div>
-              <b>Recorded by:</b> &nbsp; Mustapha Ramadhani
+              <b>Registered by:</b> &nbsp; {{ batch.regby }}
             </div>
             <div>
-              <b>Last edited by:</b> &nbsp; -
+              <b>Last edited on:</b> &nbsp; {{ batch.lastEdit }}
             </div>
             <div>
-              <b>Last edited on:</b> &nbsp; -
+              <b>Last edited by:</b> &nbsp; {{ batch.editby }}
             </div>
             <hr class="d-block w-100 my-3" />
             <div>
-              <b>Batch number:</b> &nbsp; Batch 1.05
+              <b>Batch number:</b> &nbsp; {{ batch.batchNo }}
             </div>
             <div>
-              <b>Batch type:</b> &nbsp; Going
+              <b>Batch type:</b> &nbsp; {{ batch.type }} ({{ batch.trucks }} Trucks)
             </div>
             <div>
-              <b>Client:</b> &nbsp; Arrays ltd
+              <b>Client:</b> &nbsp; {{ batch.client }}
             </div>
             <div>
-              <b>Number of trucks:</b> &nbsp; 04
+              <b>Completed:</b> &nbsp; {{ batch.complete }}
             </div>
+            <hr class="d-block w-100 my-3" />
             <div class="d-block w-100">
-              <b>Description:</b> &nbsp; -
+              <b>Description:</b> &nbsp; {{ batch.info|linebreaks }}
             </div>
 
             <div class="d-block w-100 py-3">
-              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" id="batch_update_info_btn" data-bs-toggle="modal" data-bs-target="#btc_update_modal">Update</button>
-              <button type="button" class="btn btn-danger d-inline-block m-2" id="trailer_delete_btn">Delete</button>
+              <button type="button" class="btn btn-bblue text-white d-inline-block m-2" data-bs-toggle="offcanvas" data-bs-target="#update_batch_canvas">Update</button>
+              <button type="button" class="btn btn-danger d-none m-2" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal">Delete</button>
             </div>
           </div>
         </div>
         <div id="batch_trips" class="tab_div">
-          <h5 class="position-relative">Batch trips.. <span class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#new_trip_canvas"><i class="fas fa-plus-circle"></i> Add trip</span></h5><hr class="my-1" />
+          <h5 class="position-relative">Batch trips.. <span class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#new_batchtrip_canvas"><i class="fas fa-plus-circle"></i> Add trip</span></h5><hr class="my-1" />
           <div class="d-block w-100 float-start my-1 table-responsive">
-            <table class="table text-ttxt table-striped" id="batch_trips_table">
+            <table class="table text-ttxt text-center align-middle table-striped" id="batch_trips_table">
               <thead>
                 <tr class="bg-bblight text-white text-center">
-                  <th class="text-center">S/n</th>
-                  <th class="text-center">LoadingDate</th>
-                  <th class="text-center">StartDate</th>
-                  <th class="text-center">Driver</th>
-                  <th class="text-center">Status</th>
-                  <th class="text-center">Position</th>
-                  <th class="text-center">Complete</th>
-                  <th class="text-center">Action</th>
+                  <th>S/n</th>
+                  <th>LoadDate</th>
+                  <th>StartDate</th>
+                  <th>Driver</th>
+                  <th>Status</th>
+                  <th>Position</th>
+                  <th>Complete</th>
+                  <th>Action</th>
                 </tr>
               </thead>
-              <tbody class="text-ttxt">
-                <tr>
-                  <td class="align-middle">1</td>
-                  <td class="align-middle">27-Jan-2024</td>
-                  <td class="align-middle">01-Feb-2024</td>
-                  <td class="align-middle text-start">Benson Bishanga</td>
-                  <td class="align-middle text-start">Enroute</td>
-                  <td class="align-middle text-start">Manyoni</td>
-                  <td class="align-middle">No</td>
-                  <td class="align-middle">
-                    <a class="btn btn-bblue btn-sm text-white" href="{% url 'trip_details' 5 %}">View</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="align-middle">2</td>
-                  <td class="align-middle">27-Jan-2024</td>
-                  <td class="align-middle">01-Feb-2024</td>
-                  <td class="align-middle text-start">Jonatha K.</td>
-                  <td class="align-middle text-start">Enroute</td>
-                  <td class="align-middle text-start">Kahama</td>
-                  <td class="align-middle">No</td>
-                  <td class="align-middle">
-                    <a class="btn btn-bblue btn-sm text-white" href="{% url 'trip_details' 5 %}">View</a>
-                  </td>
-                </tr>
+              <tbody>
+                {% for trip in batch_trips %}
+                  <tr>
+                    <td>{{ trip.count }}</td>
+                    <td>{{ trip.loaddate }}</td>
+                    <td>{{ trip.startdate }}</td>
+                    <td class="text-start">{{ trip.driver }}</td>
+                    <td class="text-start elipsis">{{ trip.status }}</td>
+                    <td class="text-start elipsis">{{ trip.position }}</td>
+                    <td>{{ trip.complete }}</td>
+                    <td>
+                      <a class="btn btn-bblue btn-sm text-white" href="{{ trip.url }}">View</a>
+                    </td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -105,95 +96,93 @@
       </div>
     </div>
 
-    <div class="modal fade" id="btc_update_modal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-bblue">
-            <h5 class="modal-title text-white">Update batch info..</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-          </div>
-          <form class="modal-body">
-            <div class="form-floating d-block w-100 float-start my-1">
-              <input type="text" class="form-control text-ttxt fs-6" id="btc_up_number" placeholder="p" required />
-              <label for="btc_up_number" class="text-ttxt fs-6">Batch number</label>
-            </div>
-            <div class="form-floating d-block w-100 float-start my-1">
-              <select class="form-select text-ttxt" id="btc_up_type" required>
-                <option value="">--select--</option>
-                <option value="Going">Going</option>
-                <option value="Return">Return</option>
-              </select>
-              <label class="form-label text-ttxt" for="btc_up_type">Select batch type</label>
-            </div>
-            <div class="form-floating d-block w-100 float-start my-1">
-              <input type="text" class="form-control text-ttxt fs-6" id="btc_up_client" placeholder="p" required />
-              <label for="btc_up_client" class="text-ttxt fs-6">Client</label>
-            </div>
-            <div class="form-floating d-block w-100 float-start my-1">
-              <textarea class="form-control text-ttxt" id="btc_up_describe" placeholder="d" style="min-height:150px;"></textarea>
-              <label for="btc_up_describe" class="text-ttxt">Batch description (optional)</label>
-            </div>
-          </form>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-success" id="btc_update_submit_btn" data-bs-dismiss="modal">Update</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="offcanvas offcanvas-start" id="new_trip_canvas">
+    <div class="offcanvas offcanvas-start" id="update_batch_canvas">
       <div class="offcanvas-header bg-bblue">
-        <h5 class="offcanvas-title text-white">Add new trip..</h5>
+        <h5 class="offcanvas-title text-white">Update batch info..</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
-        <form class="d-block w-100 float-start">
-          <div class="formsms w-100 float-start my-1"></div>
+        <form class="d-block w-100 float-start" id="update_batch_form" action="{% url 'batches_operations' %}">
+          <div class="formsms w-100 float-start text-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt" id="trp_truck1" required>
-              <option value="">--select--</option>
-              <option value="1">T987CLF/T654DRT</option>
-              <option value="2" selected>T159BUP/T964CHD</option>
-              <option value="3">T753DYK/T438DWE</option>
+            <input type="text" class="form-control text-ttxt fs-6" id="btc_number" name="batchnumber" placeholder="p" value="{{ batch.batchNo }}" required />
+            <label for="btc_number" class="text-ttxt fs-6">Batch number</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="btc_type" name="batchType" required>
+              <option value="{{ batch.type }}">{{ batch.type }}</option>
             </select>
-            <label class="form-label text-ttxt" for="trp_truck1">Select truck</label>
-          </div>
-          <div class="form-floating d-block w-100 float-start my-1 px-1">
-            <span class="btn btn-bblue btn-sm text-white float-end" id="trp_addtruck_btn">Add truck</span>
+            <label class="form-label text-ttxt" for="btc_type">Select batch type</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt" id="trp_batch" disabled>
+            <input type="text" class="form-control text-ttxt fs-6" id="btc_client" name="client" placeholder="p" value="{{ batch.client }}" required />
+            <label for="btc_client" class="text-ttxt fs-6">Client</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt" id="btc_describe" placeholder="d" style="min-height:100px;" name="describe">{{ batch.info|safe }}</textarea>
+            <label for="btc_describe" class="text-ttxt">Batch description (optional)</label>
+          </div>
+
+          <input type="hidden" value="{{ batch.id }}" name="batch_id" />
+
+          <div class="form-floating d-block w-100 float-start my-3 text-end">
+            <button type="button" class="btn btn-danger d-inline-block me-2" id="btc_cancel_btn" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="btc_submit_btn">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="offcanvas offcanvas-start" id="new_batchtrip_canvas">
+      <div class="offcanvas-header bg-bblue">
+        <h5 class="offcanvas-title text-white">Add new trip to this batch..</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body bg-llight">
+        <form class="d-block w-100 float-start" id="new_batchtrip_form" action="{% url 'trips_operations' %}" autocomplete="off">
+          <div class="formsms w-100 float-start text-start my-1"></div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt fs-6" id="trp_truck" required>
               <option value="">--select--</option>
-              <option value="1">Batch 1.04 - Client names 1</option>
-              <option value="2">Batch 1.02 - Client details 2</option>
-              <option value="3" selected>Batch 1.12 - Client names 3</option>
+              {% for trk in trucks_list %}
+                <option value="{{ trk.id }}">{{ trk.reg }}</option>
+              {% endfor %}
+            </select>
+            <label class="form-label text-ttxt fs-6" for="trp_truck">Select truck</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <select class="form-select text-ttxt" id="trp_batch" name="batch" required>
+              <option value="{{ batch.id }}">{{ batch.batchNo }} - {{ batch.type }}: {{ batch.client }}</option>
             </select>
             <label class="form-label text-ttxt" for="trp_batch">Select batch</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trp_loadingpoint" placeholder="p" required />
-            <label for="trp_loadingpoint" class="text-ttxt fs-6">Loading point</label>
+            <input type="text" class="form-control text-ttxt fs-6" id="trp_loadingpoint" name="loadPoint" placeholder="p" required />
+            <label for="trp_loadingpoint" class="form-label text-ttxt fs-6">Loading point</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="datetime-local" class="form-control text-ttxt fs-6" id="trp_loadingdate" placeholder="p" required />
-            <label for="trp_loadingdate" class="text-ttxt fs-6">Loading date & time</label>
+            <input type="datetime-local" class="form-control text-ttxt fs-6" id="trp_loadingdate" name="loadDate" placeholder="p" required />
+            <label for="trp_loadingdate" class="form-label text-ttxt fs-6">Loading date & time</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="datetime-local" class="form-control text-ttxt fs-6" id="trp_startdate" placeholder="p" required />
-            <label for="trp_startdate" class="text-ttxt fs-6">Trip start date & time</label>
+            <input type="datetime-local" class="form-control text-ttxt fs-6" id="trp_startdate" name="startDate" placeholder="p" required />
+            <label for="trp_startdate" class="form-label text-ttxt fs-6">Trip start date & time</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="trp_destination" placeholder="p" required />
-            <label for="trp_destination" class="text-ttxt fs-6">Trip destination</label>
+            <input type="text" class="form-control text-ttxt fs-6" id="trp_destination" name="destination" placeholder="p" required />
+            <label for="trp_destination" class="form-label text-ttxt fs-6">Trip destination</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <textarea class="form-control text-ttxt" id="trp_cargo" placeholder="d" style="min-height:150px;"></textarea>
-            <label for="trp_cargo" class="text-ttxt">Cargo description</label>
+            <input type="number" min="0" class="form-control text-ttxt fs-6" id="trp_cargoweight" name="cargoWeight" placeholder="p" required />
+            <label for="trp_cargoweight" class="form-label text-ttxt fs-6">Cargo weight in tonnes</label>
+          </div>
+          <div class="form-floating d-block w-100 float-start my-1">
+            <textarea class="form-control text-ttxt fs-6" id="trp_cargo" placeholder="d" style="min-height:130px;" name="describe"></textarea>
+            <label for="trp_cargo" class="form-label text-ttxt fs-6">Cargo & trip description</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
-            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
-            <button type="submit" class="btn btn-success d-inline-block" id="trp_submit_btn">Save</button>
+            <button type="button" class="btn btn-danger d-inline-block me-2" id="trp_cancel_btn" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="trp_submit_btn">Add</button>
           </div>
         </form>
       </div>
@@ -206,53 +195,19 @@
     </div>
 
     <div class="d-block w-100 float-start my-2 table-responsive">
-      <table class="table text-ttxt table-striped" id="batches_table">
+      <table class="table text-ttxt text-center text-nowrap align-middle table-striped" id="batches_table">
         <thead>
-          <tr class="bg-bblight text-white text-center">
-            <th class="text-center">S/n</th>
-            <th class="text-center">RecordDate</th>
-            <th class="text-center">Number</th>
-            <th class="text-center">Type</th>
-            <th class="text-center">Client</th>
-            <th class="text-center">Complete</th>
-            <th class="text-center">Action</th>
+          <tr class="bg-bblight text-white">
+            <th>S/n</th>
+            <th>RecordDate</th>
+            <th>BatchNo</th>
+            <th>BatchType</th>
+            <th>Client</th>
+            <th>Trucks/Trips</th>
+            <th>Complete</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody class="text-ttxt">
-          <tr>
-            <td class="align-middle">1</td>
-            <td class="align-middle">27-Feb-2024</td>
-            <td class="align-middle">Batch 1.04</td>
-            <td class="align-middle">Return</td>
-            <td class="align-middle">Arrays ltd</td>
-            <td class="align-middle">No</td>
-            <td class="align-middle">
-              <a class="btn btn-bblue btn-sm" href="{% url 'batch_details' 5 %}">View</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="align-middle">2</td>
-            <td class="align-middle">13-Feb-2024</td>
-            <td class="align-middle">Batch 1.06</td>
-            <td class="align-middle">Return</td>
-            <td class="align-middle">Tesla ltd</td>
-            <td class="align-middle">Yes</td>
-            <td class="align-middle">
-              <a class="btn btn-bblue btn-sm" href="{% url 'batch_details' 5 %}">View</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="align-middle">3</td>
-            <td class="align-middle">29-Jan-2024</td>
-            <td class="align-middle">Batch 1.05</td>
-            <td class="align-middle">Going</td>
-            <td class="align-middle">Arrays ltd</td>
-            <td class="align-middle">Yes</td>
-            <td class="align-middle">
-              <a class="btn btn-bblue btn-sm" href="{% url 'batch_details' 5 %}">View</a>
-            </td>
-          </tr>
-        </tbody>
       </table>
     </div>
 
@@ -262,14 +217,14 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body bg-llight">
-        <form class="d-block w-100 float-start">
-          <div class="formsms w-100 float-start my-1"></div>
+        <form class="d-block w-100 float-start" id="addnew_batch_form" action="{% url 'batches_operations' %}" autocomplete="off">
+          <div class="formsms w-100 float-start text-start my-1"></div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="btc_number" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="btc_number" name="batchnumber" placeholder="p" required />
             <label for="btc_number" class="text-ttxt fs-6">Batch number</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <select class="form-select text-ttxt" id="btc_type" required>
+            <select class="form-select text-ttxt" id="btc_type" name="batchType" required>
               <option value="">--select--</option>
               <option value="Going">Going</option>
               <option value="Return">Return</option>
@@ -277,20 +232,48 @@
             <label class="form-label text-ttxt" for="btc_type">Select batch type</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <input type="text" class="form-control text-ttxt fs-6" id="btc_client" placeholder="p" required />
+            <input type="text" class="form-control text-ttxt fs-6" id="btc_client" name="client" placeholder="p" required />
             <label for="btc_client" class="text-ttxt fs-6">Client</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-1">
-            <textarea class="form-control text-ttxt" id="btc_describe" placeholder="d" style="min-height:150px;"></textarea>
+            <textarea class="form-control text-ttxt" id="btc_describe" placeholder="d" style="min-height:100px;" name="describe"></textarea>
             <label for="btc_describe" class="text-ttxt">Batch description (optional)</label>
           </div>
           <div class="form-floating d-block w-100 float-start my-3 text-end">
-            <button type="button" class="btn btn-danger d-inline-block me-2" data-bs-dismiss="offcanvas">Cancel</button>
-            <button type="submit" class="btn btn-success d-inline-block" id="trl_submit_btn">Save</button>
+            <button type="button" class="btn btn-danger d-inline-block me-2" id="btc_cancel_btn" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="btn btn-success d-inline-block" id="btc_submit_btn">Save</button>
           </div>
         </form>
       </div>
     </div>
+
+    <div class="modal fade" id="date_filter_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-bblue">
+            <h5 class="modal-title text-white">Select range of dates..</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt1" id="min_date" placeholder="d" />
+              <label for="min_date" class="text-ttxt1">Minimum date</label>
+            </div>
+            <div class="form-floating d-block w-100 float-start my-1">
+              <input type="date" class="form-control text-ttxt1" id="max_date" placeholder="d" />
+              <label for="max_date" class="text-ttxt1">Maximum date</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-long-arrow-left"></i></button>
+            <button type="button" class="btn btn-bblue text-white" id="date_clear"><i class="fas fa-refresh"></i></button>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="date_filter_btn"><i class="fas fa-check-circle"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <input type="hidden" id="batches_url" value="{% url 'batches' %}" />
   {% endif %}
 {% endblock %}
 {% block scripts %}
