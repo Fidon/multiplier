@@ -36,8 +36,7 @@ def home_page(request):
 
 
 @login_required
-def signout(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return JsonResponse({'message': '200'})
-    return JsonResponse({'message': '405'})
+def logout_view(request):
+  if request.user.is_authenticated:
+    logout(request)
+  return redirect("/")

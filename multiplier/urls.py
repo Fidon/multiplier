@@ -7,7 +7,7 @@ urlpatterns = [
     path('', v.login_page, name='auth_url'),
     path('auth/', v.login_page, name='auth_url'),
     path('home/', v.home_page, name='home_url'),
-    path('signout/', v.signout, name='signout'),
+    path('signout/', v.logout_view, name='signout'),
 
     path('fleet/', include('apps.fleet.urls')),
     path('op/', include('apps.trips.urls')),
